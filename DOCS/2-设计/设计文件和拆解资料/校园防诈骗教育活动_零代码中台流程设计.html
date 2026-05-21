@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校园防诈骗教育测评活动 - 零代码实时活动中台流程设计</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.6; max-width: 1200px; margin: 0 auto; padding: 20px; background: #f5f7fa; color: #333; }
+        h1 { color: #1a73e8; border-bottom: 3px solid #1a73e8; padding-bottom: 10px; }
+        h2 { color: #2c5aa0; margin-top: 30px; }
+        h3 { color: #444; }
+        .section { background: white; border-radius: 8px; padding: 24px; margin: 20px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .highlight { background: #e8f0fe; padding: 2px 6px; border-radius: 4px; color: #1a73e8; font-weight: 600; }
+        .tech-tag { display: inline-block; background: #fce8e6; color: #c5221f; padding: 2px 8px; border-radius: 12px; font-size: 12px; margin: 0 4px; }
+        .role-box { display: inline-block; background: #e6f4ea; color: #137333; padding: 4px 12px; border-radius: 16px; font-size: 13px; margin: 4px; border: 1px solid #137333; }
+        .channel-box { display: inline-block; background: #fff8e1; color: #b06000; padding: 4px 12px; border-radius: 16px; font-size: 13px; margin: 4px; border: 1px solid #b06000; }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        th, td { border: 1px solid #dadce0; padding: 12px; text-align: left; }
+        th { background: #f8f9fa; font-weight: 600; }
+        .mermaid { background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #e0e0e0; }
+        .note { background: #fff3cd; border-left: 4px solid #ffc107; padding: 12px 16px; margin: 12px 0; border-radius: 4px; }
+        .success { background: #d4edda; border-left: 4px solid #28a745; padding: 12px 16px; margin: 12px 0; border-radius: 4px; }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <h1>校园防诈骗教育+测评活动 — 零代码实时活动中台全流程设计</h1>
+
+    <div class="section">
+        <h2>一、活动主体定义</h2>
+        <p>基于零代码实时活动中台，本次活动涉及以下核心角色与系统主体：</p>
+
+        <h3>1. 组织管理侧</h3>
+        <div>
+            <span class="role-box">🏫 学校保卫处</span>
+            <span class="role-box">🎓 学生工作处</span>
+            <span class="role-box">🌐 校团委</span>
+            <span class="role-box">👨‍🏫 辅导员/班主任</span>
+            <span class="role-box">🛡️ 学生会安全部</span>
+        </div>
+        <p style="margin-top:8px; color:#666; font-size:14px;">负责活动发起、内容审核、模板配置、数据监控、异常处置</p>
+
+        <h3>2. 平台技术侧</h3>
+        <div>
+            <span class="role-box">⚙️ 零代码中台管理端</span>
+            <span class="role-box">🚀 活动核心服务集群</span>
+            <span class="role-box">💾 Caffeine本地缓存</span>
+            <span class="role-box">🔴 Redis分布式缓存</span>
+            <span class="role-box">📨 Pulsar消息队列</span>
+            <span class="role-box">🗄️ TiDB分布式数据库</span>
+            <span class="role-box">🛡️ 风控引擎</span>
+            <span class="role-box">📊 实时数据看板</span>
+        </div>
+
+        <h3>3. 学生参与侧</h3>
+        <div>
+            <span class="role-box">👤 在校学生（本科生/研究生）</span>
+            <span class="role-box">📱 移动端用户（微信/QQ/浏览器）</span>
+            <span class="role-box">💻 PC端用户（机房/图书馆）</span>
+        </div>
+
+        <h3>4. 渠道触达侧</h3>
+        <div>
+            <span class="channel-box">💬 QQ群/QQ频道</span>
+            <span class="channel-box">💬 微信群/企业微信</span>
+            <span class="channel-box">🔗 短链接/H5活动页</span>
+            <span class="channel-box">📧 学校邮件系统</span>
+            <span class="channel-box">📱 短信/APP推送</span>
+            <span class="channel-box">🖥️ 校园门户/公众号</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>二、完整时序流程图</h2>
+        <p>以下时序图展示了从<strong>"零代码创建活动"</strong>到<strong>"学生完成测评并实时看数据"</strong>的全链路交互：</p>
+        <div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor Admin as 学校负责人<br/>(保卫处/辅导员)
+    actor Student as 学生
+    participant Portal as 零代码中台管理端
+    participant Gateway as 活动网关/API服务
+    participant Auth as 统一身份认证
+    participant Risk as 风控引擎
+    participant Cache as 多级缓存<br/>(Caffeine+Redis)
+    participant MQ as Pulsar消息队列
+    participant Score as 评分/证书服务
+    participant DB as TiDB分布式数据库
+    participant Notify as 通知服务
+    participant Board as 实时数据看板
+
+    rect rgb(232, 240, 254)
+        Note over Admin,Board: 【阶段一】零代码活动创建与发布（活动前3天）
+        Admin->>Portal: 登录中台，选择"教育测评"模板
+        Portal-->>Admin: 返回模板配置页（拖拽式表单）
+        Admin->>Portal: 配置活动元信息<br/>(名称/时间/参与范围/防诈骗视频/测评题库)
+        Admin->>Portal: 设置风控规则<br/>(IP限制/设备指纹/答题时长/切屏检测)
+        Admin->>Portal: 配置通知渠道<br/>(QQ群机器人/微信模板消息/短信)
+        Portal->>DB: 保存活动配置、题目数据、规则引擎
+        DB-->>Portal: 确认写入成功（分布式事务）
+        Portal->>Cache: 预热活动配置+题目缓存（Hash结构）
+        Cache-->>Portal: 预热完成
+        Portal-->>Admin: 生成多渠道投放链接<br/>(QQ专用/微信专用/通用H5)
+        Admin->>Student: 通过QQ群/微信群/邮件分发活动链接
+    end
+
+    rect rgb(255, 248, 225)
+        Note over Admin,Board: 【阶段二】学生参与与实时风控（活动进行中）
+        Student->>Gateway: 点击链接（QQ/微信/浏览器）
+        Gateway->>Auth: 校验身份（学号/微信OAuth/QQ登录）
+        Auth-->>Gateway: 返回用户身份+所属院系班级
+        Gateway->>Risk: 提交设备指纹+IP+行为特征
+        Risk->>Cache: 查询该用户历史风险标记
+        Cache-->>Risk: 返回风险评分
+        Risk-->>Gateway: 风控结果：通过/验证码/拦截
+
+        alt 风控拦截
+            Gateway-->>Student: 返回"存在异常，请联系辅导员"
+            Gateway->>MQ: 异步写入风控拦截日志
+            MQ->>DB: 批量持久化异常记录
+        else 风控通过
+            Gateway->>Cache: 读取教育内容（视频/图文）
+            Cache-->>Gateway: 返回内容（命中Caffeine本地缓存）
+            Gateway-->>Student: 渲染防诈骗教育页面
+
+            Note right of Student: 学生学习视频/图文<br/>前端实时上报学习进度
+            Student->>Gateway: 上报学习进度（心跳包）
+            Gateway->>MQ: 异步发送学习行为事件
+            MQ->>DB: 批量消费写入学习记录
+
+            Student->>Gateway: 完成学习，进入测评
+            Gateway->>Cache: 读取测评题目（Redis Hash）
+            Cache-->>Gateway: 返回题目（避免DB压力）
+            Gateway-->>Student: 渲染答题页面（随机抽题/乱序）
+        end
+    end
+
+    rect rgb(212, 237, 218)
+        Note over Admin,Board: 【阶段三】测评提交与异步批量处理（高并发削峰）
+        Student->>Gateway: 提交答案（考试结束/超时自动交卷）
+        Gateway->>Risk: 二次校验（切屏次数/答题时长/答案相似度）
+        Risk-->>Gateway: 校验通过
+        Gateway->>MQ: 发送"答题提交"事件（Pulsar Topic）
+        Gateway-->>Student: 立即返回"提交成功，评分中..."
+
+        Note over MQ: 全校学生集中提交<br/>Pulsar批量削峰
+
+        Score->>MQ: 批量消费答题消息（500条/批次）
+        Score->>Cache: 查询标准答案（本地缓存）
+        Cache-->>Score: 返回答案
+        Score->>Score: 自动判分（单选/多选/判断）
+        Score->>DB: 批量写入成绩记录（TiDB自动分片）
+        DB-->>Score: 确认写入
+        Score->>Cache: 更新用户成绩缓存
+        Score->>MQ: 发送"评分完成"事件
+    end
+
+    rect rgb(255, 243, 224)
+        Note over Admin,Board: 【阶段四】结果通知与证书发放
+        MQ->>Notify: 消费"评分完成"事件
+        Notify->>Cache: 查询用户通知偏好
+        Cache-->>Notify: 返回偏好（QQ/微信/短信）
+
+        alt 成绩合格
+            Notify->>Student: QQ推送：测评通过+电子证书链接
+            Notify->>Student: 微信服务通知：成绩+证书下载
+            Notify->>DB: 写入证书发放记录
+        else 成绩不合格
+            Notify->>Student: 推送补考链接与错题解析
+        end
+    end
+
+    rect rgb(243, 229, 245)
+        Note over Admin,Board: 【阶段五】负责人实时监控（全活动周期）
+        Admin->>Board: 打开实时数据看板
+        Board->>Cache: 读取实时聚合指标<br/>(参与人数/通过率/风控拦截/渠道来源)
+        Board->>DB: 读取分钟级趋势统计（TiDB HTAP）
+        Cache-->>Board: 返回秒级实时数据
+        DB-->>Board: 返回分钟级分析数据
+        Board-->>Admin: 展示多维看板<br/>院系参与率/答题正确率/风险热力图
+
+        Note over Admin: 发现某院系参与率低于10%<br/>立即通过QQ群二次催促
+        Admin->>Portal: 触发"定向催办"（选择未参与学生）
+        Portal->>Notify: 批量发送提醒通知
+        Notify->>Student: QQ/微信提醒：您还未完成防诈骗测评
+    end
+
+    rect rgb(207, 216, 220)
+        Note over Admin,Board: 【阶段六】活动结束与数据归档
+        Admin->>Portal: 关闭活动入口
+        Portal->>Cache: 清除活动相关热点缓存（TTL到期）
+        Portal->>DB: 触发数据归档（冷数据迁移至对象存储）
+        DB-->>Portal: 归档完成
+        Portal-->>Admin: 导出完整报告<br/>(参与名单/成绩分布/风险事件汇总)
+    end
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>三、多渠道实际场景拓展</h2>
+
+        <h3>📱 QQ生态场景</h3>
+        <table>
+            <tr><th>场景</th><th>具体流程</th><th>中台支撑</th></tr>
+            <tr>
+                <td><strong>QQ群推送</strong></td>
+                <td>辅导员在班级QQ群发送活动卡片，学生点击内嵌链接直接唤起QQ内置浏览器参与，无需跳转外部APP</td>
+                <td><span class="tech-tag">QQ UA识别</span><span class="tech-tag">内嵌H5适配</span></td>
+            </tr>
+            <tr>
+                <td><strong>QQ频道通知</strong></td>
+                <td>学校官方频道发布活动公告，订阅学生收到Push，点击后带参跳转（自动携带QQ OpenID用于身份关联）</td>
+                <td><span class="tech-tag">OAuth2.0</span><span class="tech-tag">渠道参数追踪</span></td>
+            </tr>
+            <tr>
+                <td><strong>QQ机器人催办</strong></td>
+                <td>活动看板识别未参与学生，QQ机器人私聊发送提醒："@张三，防诈骗测评还剩2天截止，点击完成→[链接]"</td>
+                <td><span class="tech-tag">定时任务</span><span class="tech-tag">消息模板</span></td>
+            </tr>
+        </table>
+
+        <h3>💬 微信生态场景</h3>
+        <table>
+            <tr><th>场景</th><th>具体流程</th><th>中台支撑</th></tr>
+            <tr>
+                <td><strong>公众号推文</strong></td>
+                <td>学校公众号发布防诈骗推文，文末嵌入"立即测评"按钮，点击授权微信头像昵称，自动关联学号（首次需绑定）</td>
+                <td><span class="tech-tag">微信JS-SDK</span><span class="tech-tag">UnionID映射</span></td>
+            </tr>
+            <tr>
+                <td><strong>企业微信通知</strong></td>
+                <td>通过企业微信"家长/学生通讯录"推送测评任务，已读未读状态实时回传至中台看板</td>
+                <td><span class="tech-tag">企微API</span><span class="tech-tag">已读回调</span></td>
+            </tr>
+            <tr>
+                <td><strong>微信服务消息</strong></td>
+                <td>测评完成后，微信服务通知推送成绩："您的防诈骗测评成绩为92分，获得安全卫士电子证书"</td>
+                <td><span class="tech-tag">模板消息</span><span class="tech-tag">证书生成</span></td>
+            </tr>
+        </table>
+
+        <h3>🔗 通用链接场景</h3>
+        <table>
+            <tr><th>场景</th><th>具体流程</th><th>中台支撑</th></tr>
+            <tr>
+                <td><strong>短链接海报</strong></td>
+                <td>生成带二维码的短链接海报，张贴于食堂/宿舍/教学楼，学生扫码后根据设备类型自动跳转（微信环境走微信授权，浏览器走学号登录）</td>
+                <td><span class="tech-tag">短链服务</span><span class="tech-tag">环境嗅探</span></td>
+            </tr>
+            <tr>
+                <td><strong>校园门户集成</strong></td>
+                <td>活动链接嵌入学校官网/办事大厅IFrame，学生登录门户后单点免登直接进入测评</td>
+                <td><span class="tech-tag">SSO单点登录</span><span class="tech-tag">JWT Token</span></td>
+            </tr>
+            <tr>
+                <td><strong>机房统一组织</strong></td>
+                <td>计算机基础课机房，教师统一投影活动链接，学生批量参与。中台识别同一出口IP，自动放宽风控阈值</td>
+                <td><span class="tech-tag">IP白名单</span><span class="tech-tag">动态风控</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>四、中台核心技术支撑映射</h2>
+        <p>本次活动完美复用了中台的五大核心能力，校园场景成为商业化能力的最小可行性验证（MVP）：</p>
+
+        <table>
+            <tr><th>校园痛点</th><th>中台能力</th><th>本次应用场景</th><th>技术实现</th></tr>
+            <tr>
+                <td>每次办活动都要前后端开发</td>
+                <td><strong>零代码配置</strong></td>
+                <td>保卫处老师在管理端拖拽配置防诈骗测评活动，15分钟上线</td>
+                <td>活动模板引擎 + 可视化表单 + 规则配置</td>
+            </tr>
+            <tr>
+                <td>全校学生集中参与系统卡顿</td>
+                <td><strong>多级缓存+热点治理</strong></td>
+                <td>教育视频、测评题目、标准答案全部进Caffeine+Redis缓存，避免数据库被打爆</td>
+                <td>HeavyKeeper识别热点题目，TTL管控缓存周期，命中率>94%</td>
+            </tr>
+            <tr>
+                <td>下课铃响瞬间几千人同时交卷</td>
+                <td><strong>削峰与异步批量</strong></td>
+                <td>答题提交不直接写库，先入Pulsar队列，评分服务批量消费，削平交卷峰值</td>
+                <td>Pulsar Topic分区 + 批量消费（500条/批），吞吐量提升4.3倍</td>
+            </tr>
+            <tr>
+                <td>学生找代刷、机器刷题</td>
+                <td><strong>风控引擎</strong></td>
+                <td>切屏检测、答题时长异常、IP聚集、答案相似度分析，实时拦截作弊</td>
+                <td>设备指纹 + 行为序列分析 + 规则引擎</td>
+            </tr>
+            <tr>
+                <td>各院系数据分散无法汇总</td>
+                <td><strong>分布式存储+实时看板</strong></td>
+                <td>全校学生答题数据自动分片存入TiDB，实时HTAP分析生成院系排名</td>
+                <td>TiDB自动分片 + 实时流处理 + 多维聚合看板</td>
+            </tr>
+            <tr>
+                <td>活动崩了影响教学秩序</td>
+                <td><strong>高可用降级</strong></td>
+                <td>若Redis故障，自动降级为本地缓存直查；若流量超限，关闭非核心统计，保障答题提交可用</td>
+                <td>多级降级策略 + 熔断 + 限流</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>五、专业项目定位与市场分析总结</h2>
+
+        <div class="success">
+            <strong>项目定位（基于本次校园场景验证后的升级）：</strong><br/>
+            面向<strong>高校、中小企业、电商及品牌方</strong>的零代码实时营销/教育活动中台，标准化提供<strong>教育测评、防诈宣传、秒杀、集赞、抽奖、拼团、优惠券</strong>等全场景活动能力。通过多级缓存、异步削峰、分布式存储与多级降级架构，解决传统活动系统<strong>峰值崩溃、上线周期长、风控薄弱、数据不一致</strong>四大痛点，支撑多渠道活动分钟级落地，实现活动效果实时可观测。
+        </div>
+
+        <h3>市场演进逻辑</h3>
+        <p><strong>阶段1：校园MVP验证（已验证）</strong></p>
+        <ul>
+            <li>场景：防诈骗教育测评、歌手大赛投票、社团招新集赞</li>
+            <li>验证点：零代码配置是否真正15分钟上线？高并发下缓存命中率是否稳定？Pulsar削峰是否有效？</li>
+            <li>结果：校园场景成功支撑5000+并发，验证架构可行性</li>
+        </ul>
+
+        <p><strong>阶段2：垂直行业复制（高校/政务）</strong></p>
+        <ul>
+            <li>将"防诈骗测评"模板抽象为"在线考试/培训测评"通用模板</li>
+            <li>拓展至：入党积极分子培训考试、实验室安全准入考试、心理健康普查</li>
+            <li>付费模式：SaaS年费 + 按参与人次计费</li>
+        </ul>
+
+        <p><strong>阶段3：商业化中台（中小企业/电商/品牌方）</strong></p>
+        <ul>
+            <li>教育测评模板 → 电商会员知识测评（答题领券）</li>
+            <li>防诈骗视频学习 → 品牌方新品发布视频互动（看视频抽奖）</li>
+            <li>校园秒杀周边 → 电商大促秒杀、品牌方限量发售</li>
+            <li>核心价值：企业无需自建营销系统，中台提供<strong>活动创建→渠道分发→风控→数据回收</strong>闭环</li>
+        </ul>
+
+        <div class="note">
+            <strong>关键洞察：</strong>校园防诈骗测评活动看似与"电商秒杀"无关，但其底层技术挑战（高并发读题、瞬时交卷削峰、实时成绩统计、多渠道身份打通）与商业营销场景高度同构。本次校园场景的成功，证明了中台架构在<strong>严肃场景（教育/政务）</strong>与<strong>营销场景（电商/品牌）</strong>之间的通用性与扩展性。
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            sequence: {
+                showSequenceNumbers: true,
+                actorFontSize: 14,
+                noteFontSize: 13,
+                messageFontSize: 13
+            }
+        });
+    </script>
+</body>
+</html>

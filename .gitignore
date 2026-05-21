@@ -1,0 +1,40 @@
+### Java Backend - EXCLUDED ###
+src/
+pom.xml
+mvnw
+mvnw.cmd
+.mvn/
+target/
+
+### Deploy Scripts - EXCLUDED ###
+deploy/
+Dockerfile
+sql/
+
+### Thumb Frontend - EXCLUDED ###
+thumb-front/
+
+### Portfolio Build Artifacts ###
+portfolio/node_modules/
+portfolio/dist/
+portfolio/.env.local
+portfolio/.env.*.local
+
+### IDE ###
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+.sts4-cache/
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### Temp ###
+*.bundle
+repo.bundle

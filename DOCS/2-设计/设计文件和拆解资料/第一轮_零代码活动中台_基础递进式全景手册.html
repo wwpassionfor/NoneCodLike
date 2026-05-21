@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【第一轮】零代码实时活动中台 · 基础递进式全景手册</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+:root{--primary:#1a73e8;--danger:#c5221f;--success:#137333;--warn:#b06000;--bg:#f8f9fa;--text:#202124;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.8;max-width:1200px;margin:0 auto;padding:24px;background:var(--bg);color:var(--text);}
+h1{color:var(--primary);border-bottom:3px solid var(--primary);padding-bottom:12px;font-size:28px;margin-bottom:6px;}
+.subtitle{color:#5f6368;font-size:14px;margin-bottom:24px;}
+h2{color:var(--primary);margin-top:40px;font-size:22px;border-left:5px solid var(--primary);background:#e8f0fe;padding:10px 14px;border-radius:0 8px 8px 0;}
+h3{color:#2c5aa0;margin-top:28px;font-size:18px;border-bottom:1px solid #dadce0;padding-bottom:6px;}
+h4{color:#444;margin-top:20px;font-size:16px;}
+.section{background:white;border-radius:10px;padding:28px;margin:24px 0;box-shadow:0 1px 6px rgba(60,64,67,0.08);}
+.tag{display:inline-block;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:600;margin:2px 4px;}
+.tag-pain{background:#fce8e6;color:var(--danger);}
+.tag-tech{background:#e8f0fe;color:var(--primary);}
+.tag-scene{background:#fff8e1;color:var(--warn);}
+.tag-base{background:#e6f4ea;color:var(--success);}
+.box-scene{background:#fff8e1;border-left:4px solid var(--warn);padding:16px 20px;margin:16px 0;border-radius:6px;}
+.box-scene h4{margin:0 0 8px 0;color:var(--warn);font-size:15px;}
+.box-pain{background:#fce8e6;border-left:4px solid var(--danger);padding:16px 20px;margin:16px 0;border-radius:6px;}
+.box-pain h4{margin:0 0 8px 0;color:var(--danger);font-size:15px;}
+.box-base{background:#e6f4ea;border-left:4px solid var(--success);padding:16px 20px;margin:16px 0;border-radius:6px;}
+.box-base h4{margin:0 0 8px 0;color:var(--success);font-size:15px;}
+.box-tech{background:#e8f0fe;border-left:4px solid var(--primary);padding:16px 20px;margin:16px 0;border-radius:6px;}
+.box-tech h4{margin:0 0 8px 0;color:var(--primary);font-size:15px;}
+.mermaid{background:#fafafa;padding:20px;border-radius:8px;border:1px solid #e0e0e0;margin:16px 0;}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+th,td{border:1px solid #dadce0;padding:12px;text-align:left;vertical-align:top;}
+th{background:#f1f3f4;font-weight:600;}
+.code-block{background:#f1f3f4;padding:14px 18px;border-radius:6px;font-family:"SF Mono",Monaco,"Cascadia Code",monospace;font-size:13px;color:#202124;overflow-x:auto;margin:12px 0;line-height:1.5;border-left:3px solid var(--primary);}
+.highlight{background:#fff8e1;padding:2px 6px;border-radius:4px;color:var(--warn);font-weight:600;}
+.step{display:flex;margin:14px 0;align-items:flex-start;}
+.step-num{min-width:28px;height:28px;background:var(--primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:13px;margin-right:14px;flex-shrink:0;margin-top:2px;}
+.step-content{flex:1;}
+.step-title{font-weight:600;color:#1a73e8;font-size:15px;margin-bottom:4px;}
+.step-detail{color:#444;font-size:14px;}
+.quote{background:#e8f0fe;border-left:4px solid var(--primary);padding:12px 16px;margin:12px 0;border-radius:4px;font-style:italic;color:#444;}
+.final-box{background:#202124;color:#e8eaed;padding:28px;border-radius:10px;margin:32px 0;}
+.final-box h2{color:#8ab4f8;border-left:5px solid #8ab4f8;background:transparent;}
+.final-box table{color:#e8eaed;}
+.final-box th{background:#303134;color:#8ab4f8;border-color:#5f6368;}
+.final-box td{border-color:#5f6368;}
+.tip{background:#e8f0fe;padding:10px 14px;border-radius:6px;margin:12px 0;font-size:13px;color:#1a73e8;}
+</style>
+</head>
+<body>
+
+<h1>【第一轮】零代码实时活动中台 · 基础递进式全景手册</h1>
+<div class="subtitle">目标：让技术新人、产品经理、客户都能看懂架构图和时序图的前提认知 · 纯基础层 · 层层递进</div>
+
+<!-- ==================== 第一章：项目核心目标 ==================== -->
+<div class="section">
+<h2>第一章：项目核心目标理解 —— 为什么做这个中台？</h2>
+
+<div style="margin-bottom:12px;">
+<span class="tag tag-pain">解决：上线慢</span>
+<span class="tag tag-pain">解决：峰值崩溃</span>
+<span class="tag tag-pain">解决：风控弱</span>
+<span class="tag tag-pain">解决：数据不一致</span>
+</div>
+
+<h3>1.1 一句话定位</h3>
+<div class="quote">
+"为中小企业、高校、品牌方提供一套<b>不用写代码就能配置上线</b>的营销活动系统，同时能扛住高并发、能防作弊、能保证数据不出错。"
+</div>
+
+<h3>1.2 从校园痛点出发，看懂商业需求</h3>
+<div class="box-scene">
+<h4>📍 校园起步场景（学生团队时期）</h4>
+<p>学生会要做"防诈骗知识测评"，社团要做"招新集赞"，团委要做"校庆秒杀"。每次找技术团队，都要<strong>重新开发页面、重新写接口、重新调数据库</strong>，一个活动上线要7天。活动只办3天，投入产出严重失衡。更惨的是，活动开始时几百人同时点击，系统直接白屏崩溃。</p>
+</div>
+
+<div class="box-scene">
+<h4>📍 商业化场景（推广至中小企业后）</h4>
+<p>校外电商客户要做"双十一秒杀"，品牌方要做"答题领券"。客户没有技术团队，等不起2周开发周期；活动开启时几万用户涌入，系统必须不能崩；更要防止羊毛党批量薅券、防止库存超卖导致客诉。</p>
+</div>
+
+<div class="box-pain">
+<h4>🔴 问题本质：传统方式的"四座大山"</h4>
+<table>
+<tr><th>大山</th><th>校园表现</th><th>企业表现</th><th>根因</th></tr>
+<tr><td><b>上线慢</b></td><td>7天开发一个投票页</td><td>2周开发一个秒杀页</td><td>每次重新造轮子，没有标准化模板</td></tr>
+<tr><td><b>峰值崩溃</b></td><td>300人同时点击就白屏</td><td>10万人涌入系统宕机</td><td>请求直接打数据库，没有缓冲层</td></tr>
+<tr><td><b>风控弱</b></td><td>刷票、机器点赞无法识别</td><td>羊毛党批量注册薅券</td><td>没有设备识别和行为分析能力</td></tr>
+<tr><td><b>数据不一致</b></td><td>库存显示有货实际已空</td><td>订单超卖、优惠券重复领取</td><td>并发扣减没有原子保护</td></tr>
+</table>
+</div>
+
+<h3>1.3 中台化思路：从"定制开发"到"配置即发布"</h3>
+<div class="mermaid">
+graph LR
+    A[传统方式<br/>每次重新开发] -->|痛点| B[零代码中台<br/>模板+配置]
+    B --> C[秒杀模板]
+    B --> D[集赞模板]
+    B --> E[抽奖模板]
+    B --> F[测评模板]
+    B --> G[拼团模板]
+    C --> H[客户A：电商秒杀]
+    D --> I[客户B：社团招新]
+    E --> J[客户C：品牌抽奖]
+    F --> K[客户D：防诈测评]
+    style B fill:#e8f0fe,stroke:#1a73e8
+    style A fill:#fce8e6,stroke:#c5221f
+</div>
+
+<div class="tip">
+💡 <b>核心认知</b>：中台不是"一个更大的系统"，而是把活动的共性能力（创建、参与、风控、通知、数据）抽出来做成"可复用的零件"，让客户像搭积木一样配置，而不是每次都重新焊接。
+</div>
+</div>
+
+<!-- ==================== 第二章：基础技术栈 ==================== -->
+<div class="section">
+<h2>第二章：基础技术栈白话解读 —— 每个组件是干嘛的？</h2>
+
+<h3>2.1 整体架构鸟瞰（先建立地图）</h3>
+<div class="mermaid">
+graph TD
+    A[用户/学生<br/>微信/QQ/浏览器] -->|HTTPS| B[接入层<br/>Nginx + 网关]
+    B --> C[应用层<br/>SpringBoot3 服务集群]
+    C --> D[本地缓存<br/>Caffeine]
+    C --> E[分布式缓存<br/>Redis Cluster]
+    C --> F[消息队列<br/>Apache Pulsar]
+    C --> G[数据库<br/>TiDB 分布式]
+    D -.->|未命中| E
+    E -.->|未命中| G
+    F -.->|异步写入| G
+    style C fill:#e8f0fe,stroke:#1a73e8
+    style D fill:#e6f4ea,stroke:#137333
+    style E fill:#fff8e1,stroke:#b06000
+    style F fill:#fce8e6,stroke:#c5221f
+    style G fill:#e8f0fe,stroke:#1a73e8
+</div>
+
+<h3>2.2 逐个组件大白话</h3>
+
+<div class="box-base">
+<h4>🟢 SpringBoot3 —— 系统的"骨架"</h4>
+<p><b>比喻</b>：像建筑的钢结构框架，把所有零件（缓存、数据库、消息队列）规范地组装在一起。</p>
+<p><b>在本项目中的作用</b>：</p>
+<ul>
+<li>提供HTTP接口（学生点击链接后，请求就是打到SpringBoot服务）</li>
+<li>管理业务逻辑（活动怎么创建、用户怎么参与、分数怎么算）</li>
+<li>连接所有中间件（通过配置文件把Redis、TiDB、Pulsar串起来）</li>
+</ul>
+<p><b>为什么选3.x而不是2.x</b>：支持JDK17，性能更好，响应式编程支持更强，长期维护。</p>
+</div>
+
+<div class="box-base">
+<h4>🟢 MyBatis-Plus —— 数据库操作的"翻译官"</h4>
+<p><b>比喻</b>：你写Java代码说"查订单"，MyBatis-Plus帮你翻译成MySQL/TiDB能听懂的SQL语句。</p>
+<p><b>在本项目中的作用</b>：</p>
+<ul>
+<li>不用手写大量SQL，用Java代码就能完成增删改查</li>
+<li>自动处理"多租户"（不同客户的数据自动隔离）</li>
+<li>支持Lambda查询，代码更简洁</li>
+</ul>
+</div>
+
+<div class="box-base">
+<h4>🟢 Redis Cluster —— 系统的"高速记事本"</h4>
+<p><b>比喻</b>：数据库像图书馆（存书多但找书慢），Redis像办公桌上的便签纸（记的东西少但看一眼就知道）。</p>
+<p><b>在本项目中的作用</b>：</p>
+<ul>
+<li><b>缓存热点数据</b>：活动配置、库存数量、排行榜，避免每次都查数据库</li>
+<li><b>分布式锁</b>：防止多个用户同时抢到同一件商品（超卖）</li>
+<li><b>限流计数</b>：记录某IP/某用户点击了多少次，超过就拦截</li>
+<li><b>会话存储</b>：用户登录态存在Redis，多服务器共享</li>
+</ul>
+<p><b>为什么用Cluster（集群）而不是单机</b>：单机Redis挂了缓存全丢，集群多节点互相备份，容量也更大。</p>
+</div>
+
+<div class="box-base">
+<h4>🟢 Caffeine —— 应用内的"贴身便签"</h4>
+<p><b>比喻</b>：Redis是"办公室公共便签墙"，Caffeine是"你自己桌上的小本本"，伸手就能看，不用起身。</p>
+<p><b>在本项目中的作用</b>：</p>
+<ul>
+<li>存在应用服务器内存里，读取速度极快（&lt;1毫秒）</li>
+<li>存放"最热"的数据（比如当前正在进行的秒杀活动配置）</li>
+<li>减轻Redis压力（很多请求在本地就拦截了，不用走网络）</li>
+</ul>
+</div>
+
+<div class="box-base">
+<h4>🟢 Apache Pulsar —— 系统的"排队叫号机"</h4>
+<p><b>比喻</b>：医院高峰期病人太多，医生看不过来，先取号排队，医生按顺序叫号，不会挤爆诊室。</p>
+<p><b>在本项目中的作用</b>：</p>
+<ul>
+<li>学生集中交卷、秒杀集中下单时，请求不直接写数据库，而是先"取号"进队列</li>
+<li>后端服务按固定速度"叫号"处理，把脉冲式高峰削成平缓流量</li>
+<li>支持批量处理（一次叫500个号一起看），效率更高</li>
+</ul>
+</div>
+
+<div class="box-base">
+<h4>🟢 TiDB —— 能自动扩容的"智能仓库"</h4>
+<p><b>比喻</b>：普通MySQL像一间固定大小的仓库，满了就得人工搬东西换大房子；TiDB像乐高积木仓库，不够用了自动拼接新的积木块扩容。</p>
+<p><b>在本项目中的作用</b>：</p>
+<ul>
+<li>存所有业务数据（活动、订单、用户行为、优惠券）</li>
+<li>数据自动分片（不用人工分库分表），按活动ID或用户ID自动分散到不同节点</li>
+<li>支持分布式事务（跨多个节点的操作也能保证ACID）</li>
+<li>同时支持实时分析（一份数据既能查单笔订单，也能做全校统计）</li>
+</ul>
+</div>
+
+<div class="box-base">
+<h4>🟢 Knife4j —— API文档的"自动打印机"</h4>
+<p><b>比喻</b>：以前接口文档靠程序员手写Word，经常过时；Knife4j像连接在代码上的打印机，代码怎么写，文档就怎么出，实时更新。</p>
+<p><b>在本项目中的作用</b>：前端H5、小程序、第三方渠道对接时，直接在线看文档、在线调试，不用口头对齐字段。</p>
+</div>
+
+<h3>2.3 技术栈协作关系图（数据流转视角）</h3>
+<div class="mermaid">
+sequenceDiagram
+    actor User as 学生/用户
+    participant Spring as SpringBoot3服务
+    participant Caffeine as Caffeine本地缓存
+    participant Redis as Redis Cluster
+    participant Pulsar as Pulsar队列
+    participant TiDB as TiDB数据库
+
+    User->>Spring: 1. 点击"参与活动"
+    Spring->>Caffeine: 2. 查本地缓存（活动规则）
+    Caffeine-->>Spring: 返回（若命中）
+    Spring->>Redis: 3. 查库存/答题进度
+    Redis-->>Spring: 返回（若命中）
+    Spring->>TiDB: 4. 未命中时查数据库
+    Spring->>Redis: 5. 回填Redis
+    Spring->>Caffeine: 6. 回填本地缓存
+    Spring->>Pulsar: 7. 异步：提交记录/发通知
+    Pulsar->>TiDB: 8. 批量消费写入
+    Spring-->>User: 9. 立即响应用户
+</div>
+
+<div class="tip">
+💡 <b>核心认知</b>：用户的一次点击，背后可能走了"本地缓存→分布式缓存→数据库→消息队列"四层。设计这套分层的目的只有一个：<b>让用户的请求尽可能在靠前的层被拦截掉，越往后越慢、越脆弱。</b>
+</div>
+</div>
+
+<!-- ==================== 第三章：核心库表设计 ==================== -->
+<div class="section">
+<h2>第三章：核心库表设计理解 —— 数据是怎么流转的？</h2>
+
+<h3>3.1 为什么需要理解库表？</h3>
+<p>架构图里的每个方块（活动服务、订单服务、风控服务），本质上都是在<strong>操作这些表</strong>。看懂表的设计，就能看懂数据怎么流、为什么不会乱。</p>
+
+<h3>3.2 四大核心领域表</h3>
+
+<div class="box-tech">
+<h4>📋 活动配置表（activity）—— "活动的户口本"</h4>
+<p><b>存什么</b>：每个活动的基本信息（名称、时间、类型、规则、参与条件）。</p>
+<p><b>关键字段理解</b>：</p>
+<table>
+<tr><th>字段</th><th>作用</th><th>为什么重要</th></tr>
+<tr><td>tenant_id</td><td>归属哪个客户/租户</td><td>客户A的活动，客户B绝对看不到</td></tr>
+<tr><td>activity_type</td><td>秒杀/集赞/抽奖/测评/拼团</td><td>决定前端渲染什么模板</td></tr>
+<tr><td>rule_config</td><td>JSON格式的规则（如"每人限3次"）</td><td>零代码配置的核心：规则存在JSON里，不用改代码</td></tr>
+<tr><td>status</td><td>未开始/进行中/已结束</td><td>定时任务靠它自动开关活动</td></tr>
+<tr><td>start_time / end_time</td><td>起止时间</td><td>缓存TTL、定时任务都依赖它</td></tr>
+</table>
+</div>
+
+<div class="box-tech">
+<h4>📋 用户参与记录表（user_behavior）—— "谁干了什么"</h4>
+<p><b>存什么</b>：每个用户在每个活动里的每一次操作（点击、答题、点赞、下单）。</p>
+<p><b>关键字段理解</b>：</p>
+<table>
+<tr><th>字段</th><th>作用</th><th>为什么重要</th></tr>
+<tr><td>user_id</td><td>用户身份</td><td>关联OneID，跨渠道识别同一人</td></tr>
+<tr><td>activity_id</td><td>参与哪个活动</td><td>聚合统计"某活动参与人数"</td></tr>
+<tr><td>behavior_type</td><td>行为类型（vote/like/exam/order）</td><td>区分是投票还是下单</td></tr>
+<tr><td>device_fingerprint</td><td>设备指纹</td><td>风控识别同一设备多账号</td></tr>
+<tr><td>create_time</td><td>发生时间</td><td>时序分析、防刷（如1秒内点10次）</td></tr>
+</table>
+</div>
+
+<div class="box-tech">
+<h4>📋 订单表（order）—— "交易凭证"</h4>
+<p><b>存什么</b>：秒杀、拼团等涉及交易的订单信息。</p>
+<p><b>关键字段理解</b>：</p>
+<table>
+<tr><th>字段</th><th>作用</th><th>为什么重要</th></tr>
+<tr><td>order_id</td><td>订单唯一编号（Long型）</td><td>传给前端时必须转String，防精度丢失</td></tr>
+<tr><td>activity_id / sku_id</td><td>关联活动/商品</td><td>统计"某商品卖出多少"</td></tr>
+<tr><td>status</td><td>待支付/已支付/已取消</td><td>超时未支付要自动回退库存</td></tr>
+<tr><td>version</td><td>乐观锁版本号</td><td>并发扣减时防止覆盖（防超卖核心）</td></tr>
+</table>
+</div>
+
+<div class="box-tech">
+<h4>📋 优惠券表（coupon + coupon_record）—— "券的生命周期"</h4>
+<p><b>存什么</b>：券模板（有什么券）和券领取记录（谁领了谁用了）。</p>
+<p><b>关键字段理解</b>：</p>
+<table>
+<tr><th>字段</th><th>作用</th><th>为什么重要</th></tr>
+<tr><td>total_stock / remain_stock</td><td>总库存/剩余库存</td><td>秒杀场景下必须原子扣减</td></tr>
+<tr><td>user_limit</td><td>每人限领几张</td><td>防薅羊毛的第一道规则</td></tr>
+<tr><td>valid_start / valid_end</td><td>有效期</td><td>过期自动失效，定时清理</td></tr>
+<tr><td>record.status</td><td>已领取/已使用/已过期</td><td>防止重复使用和状态不一致</td></tr>
+</table>
+</div>
+
+<h3>3.3 数据流转全景图</h3>
+<div class="mermaid">
+graph LR
+    A[运营后台<br/>配置活动] -->|写入| B[activity表]
+    C[用户点击<br/>参与活动] -->|写入| D[user_behavior表]
+    C -->|若涉及交易| E[order表]
+    C -->|若领券| F[coupon_record表]
+    B -->|缓存预热| G[Redis + Caffeine]
+    D -->|异步批量| H[Pulsar队列]
+    E -->|异步批量| H
+    F -->|异步批量| H
+    H -->|批量写入| I[TiDB持久化]
+    G -.->|支撑实时查询| C
+    style B fill:#e8f0fe,stroke:#1a73e8
+    style D fill:#e8f0fe,stroke:#1a73e8
+    style H fill:#fce8e6,stroke:#c5221f
+    style I fill:#e6f4ea,stroke:#137333
+</div>
+
+<div class="tip">
+💡 <b>核心认知</b>：所有"写"操作最终都要到TiDB，但路径不同——<b>实时性要求高的读</b>（库存、排行榜）走缓存；<b>可容忍延迟的写</b>（行为记录、订单）走Pulsar异步批量。这种分层写入是系统能扛住高并发的根本。
+</div>
+</div>
+
+<!-- ==================== 第四章：零代码功能逻辑 ==================== -->
+<div class="section">
+<h2>第四章：零代码配置模块的逻辑 —— 拖拽怎么变成活动？</h2>
+
+<h3>4.1 产品经理/客户最关心的问题</h3>
+<div class="box-scene">
+<h4>📍 场景：客户视角</h4>
+<p>"我作为一个没有技术背景的保卫处老师/电商运营，想在后台创建一个'防诈骗测评活动'。我在页面上填了活动名称、上传了视频、设置了20道题、规定了80分及格。点发布后，系统怎么把这些变成学生能参与的H5页面？"</p>
+</div>
+
+<h3>4.2 零代码配置的本质：从"表单"到"规则引擎"</h3>
+<div class="mermaid">
+graph LR
+    A[运营后台<br/>拖拽配置] -->|生成| B[JSON规则包]
+    B -->|存储| C[activity表<br/>rule_config字段]
+    C -->|缓存预热| D[Redis + Caffeine]
+    D -->|渲染| E[前端H5/小程序]
+    E -->|用户参与| F[行为记录]
+    F -->|异步| G[TiDB]
+    style A fill:#e8f0fe,stroke:#1a73e8
+    style B fill:#fff8e1,stroke:#b06000
+    style C fill:#e8f0fe,stroke:#1a73e8
+    style E fill:#e6f4ea,stroke:#137333
+</div>
+
+<h3>4.3 分步骤逻辑解析</h3>
+
+<div class="step">
+<div class="step-num">1</div>
+<div class="step-content">
+<div class="step-title">运营端拖拽配置（可视化表单）</div>
+<div class="step-detail">后台页面提供组件库：基础信息（名称/时间）、内容组件（视频上传/题目编辑器）、规则组件（参与次数/及格线/切屏检测）、奖品组件（优惠券/实物/证书）、通知组件（微信/QQ/短信）。运营人员拖拽填写，前端实时预览效果。</div>
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">2</div>
+<div class="step-content">
+<div class="step-title">系统生成JSON规则包</div>
+<div class="step-detail">表单提交后，后端将配置转化为结构化JSON。例如测评活动的rule_config：</div>
+<div class="code-block">
+{
+  "type": "exam",
+  "passScore": 80,
+  "maxAttempts": 3,
+  "questions": [
+    {"id": 1, "type": "single", "answer": "A", "score": 10},
+    {"id": 2, "type": "multi", "answer": "AB", "score": 10}
+  ],
+  "antiCheating": {
+    "screenSwitchLimit": 3,
+    "minAnswerTime": 30
+  },
+  "notification": ["wechat", "qq"]
+}
+</div>
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">3</div>
+<div class="step-content">
+<div class="step-title">规则持久化与缓存预热</div>
+<div class="step-detail">JSON存入activity表的rule_config字段，同时生成标准activity记录（含tenant_id隔离）。发布瞬间，系统将该活动配置写入Redis Hash和Caffeine本地缓存，确保用户访问时无需查库即可获取规则。</div>
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">4</div>
+<div class="step-content">
+<div class="step-title">前端动态渲染（模板引擎）</div>
+<div class="step-detail">用户点击活动链接，前端根据activity_type加载对应模板（exam.html / seckill.html / lottery.html）。模板通过AJAX请求获取活动JSON规则，动态渲染页面：如果是测评，渲染题目和倒计时；如果是秒杀，渲染库存和抢购按钮。<b>同一套后端，不同活动类型走不同前端模板。</b></div>
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">5</div>
+<div class="step-content">
+<div class="step-title">用户行为实时校验（规则引擎执行）</div>
+<div class="step-detail">用户提交答案/点击抢购时，后端加载JSON规则实时校验：是否超过maxAttempts？答题时间是否&lt;minAnswerTime？切屏次数是否&gt;screenSwitchLimit？所有规则在内存中解析执行，无需改代码即可适配不同活动的风控强度。</div>
+</div>
+</div>
+
+<h3>4.4 为什么这能实现"零代码"？</h3>
+<div class="box-pain">
+<h4>🔴 传统方式 vs 零代码方式对比</h4>
+<table>
+<tr><th>环节</th><th>传统方式</th><th>零代码方式</th></tr>
+<tr><td>需求传递</td><td>运营写Word → 技术理解偏差 → 返工</td><td>运营自己在后台配置，所见即所得</td></tr>
+<tr><td>规则变更</td><td>"每人限3次改5次" → 提需求 → 改代码 → 发版</td><td>后台改数字 → 实时生效</td></tr>
+<tr><td>新增活动类型</td><td>前后端重新开发2周</td><td>已有模板直接复用，或新增模板1天</td></tr>
+<tr><td>多渠道投放</td><td>每渠道单独适配</td><td>自动生成微信/QQ/通用链接</td></tr>
+</table>
+</div>
+
+<div class="tip">
+💡 <b>核心认知</b>：零代码不是"没有代码"，而是把代码变成了"可配置的规则"。技术团队把活动的共性逻辑（怎么算分、怎么扣库存、怎么发通知）写成模板引擎，运营人员只需要填参数，不用关心代码怎么实现。
+</div>
+</div>
+
+<!-- ==================== 第五章：并发问题识别 ==================== -->
+<div class="section">
+<h2>第五章：并发问题识别 —— 为什么需要分布式锁、消息队列、多级缓存？</h2>
+
+<h3>5.1 先建立直觉：什么是并发问题？</h3>
+<div class="box-scene">
+<h4>📍 场景：超卖（库存扣减竞态条件）</h4>
+<p>库存只剩1件，用户A和用户B同时点击"立即抢购"。</p>
+<ul>
+<li>时刻1：A查库存 = 1，B查库存 = 1（同时读到）</li>
+<li>时刻2：A扣减库存 → 0，B扣减库存 → -1（B也成功了！）</li>
+<li>结果：卖出去2件，实际只有1件 → <b>超卖</b></li>
+</ul>
+</div>
+
+<div class="box-scene">
+<h4>📍 场景：重复提交（网络延迟+用户焦虑）</h4>
+<p>学生交卷后页面转圈3秒没反应，他以为没成功，又点了一次提交。</p>
+<ul>
+<li>请求1：正在处理中（还没写库）</li>
+<li>请求2：又进来了，系统不知道这是重复请求</li>
+<li>结果：数据库里有两条一模一样的交卷记录 → <b>重复计分</b></li>
+</ul>
+</div>
+
+<div class="box-scene">
+<h4>📍 场景：缓存击穿（热点Key集体失效）</h4>
+<p>活动开始前，运营把所有商品缓存TTL设为10分钟。10分钟后所有缓存同时过期。</p>
+<ul>
+<li>时刻T：1000个缓存Key同时失效</li>
+<li>10000个用户请求同时打到数据库</li>
+<li>数据库瞬间崩溃 → <b>缓存击穿引发雪崩</b></li>
+</ul>
+</div>
+
+<h3>5.2 从痛点反推设计逻辑</h3>
+<div class="mermaid">
+graph TD
+    A[痛点：峰值崩溃<br/>数据不一致] --> B{问题类型}
+    B -->|写冲突| C[超卖/重复领取<br/>库存竞态条件]
+    B -->|读压过大| D[数据库被打爆<br/>缓存失效]
+    B -->|写压过大| E[瞬时INSERT过多<br/>磁盘IO满载]
+    C -->|解决| F[分布式锁<br/>原子扣减]
+    D -->|解决| G[多级缓存<br/>热点探测+差异化TTL]
+    E -->|解决| H[消息队列削峰<br/>异步批量写入]
+    style A fill:#fce8e6,stroke:#c5221f
+    style F fill:#e6f4ea,stroke:#137333
+    style G fill:#e6f4ea,stroke:#137333
+    style H fill:#e6f4ea,stroke:#137333
+</div>
+
+<h3>5.3 三大并发武器的原理</h3>
+
+<div class="box-tech">
+<h4>🔒 分布式锁 —— "排队买票，一个一个来"</h4>
+<p><b>解决什么问题</b>：多个用户同时修改同一份数据（如库存）。</p>
+<p><b>怎么实现</b>：利用Redis的SETNX命令（Set if Not Exists）。谁先在Redis里占住一个Key（如"lock:stock:888"），谁就有权利扣减库存；其他人发现Key已被占用，就等待或返回"抢购中"。处理完后删除Key，下一个人进来。</p>
+<p><b>在本项目中的应用</b>：秒杀库存扣减、优惠券领取、答题次数限制。</p>
+<div class="code-block">
+// 伪代码：Redis分布式锁防止超卖
+function deductStock(skuId) {
+    lockKey = "lock:stock:" + skuId;
+    // 尝试占坑（有效期5秒，防止死锁）
+    ok = redis.set(lockKey, "1", "NX", "EX", 5);
+    if (!ok) return "系统繁忙，请重试";
+    try {
+        stock = redis.get("stock:" + skuId);
+        if (stock > 0) {
+            redis.decr("stock:" + skuId);  // 原子扣减
+            return "抢购成功";
+        } else {
+            return "库存已空";
+        }
+    } finally {
+        redis.del(lockKey);  // 释放锁
+    }
+}
+</div>
+</div>
+
+<div class="box-tech">
+<h4>📨 消息队列削峰 —— "高峰期排队，低峰期处理"</h4>
+<p><b>解决什么问题</b>：几千人同时交卷/下单，数据库INSERT不过来。</p>
+<p><b>怎么实现</b>：请求不直接写数据库，而是写入Pulsar队列（像医院的叫号机）。队列能扛住10万TPS的写入。后端消费服务按自己的节奏（比如每秒处理5000条）从队列里取数据批量写入数据库。这样数据库永远只承受匀速流量，不会被打死。</p>
+<p><b>在本项目中的应用</b>：秒杀订单创建、集赞记录、抽奖记录、测评交卷、消息通知。</p>
+<div class="code-block">
+// 伪代码：削峰流程
+function submitExam(userId, answers) {
+    // 1. 立即校验（参数、风控）
+    if (!riskCheck(userId)) return "存在异常";
+    // 2. 写入队列（极快，毫秒级）
+    pulsar.send("exam-submit", {userId, answers, time: now()});
+    // 3. 立即返回用户（不用等数据库）
+    return "提交成功，评分中...";
+}
+
+// 后端消费（批量处理）
+function consumeBatch(messages) {
+    // 一次拿500条，合并成一条INSERT
+    sql = "INSERT INTO exam_record VALUES " + join(messages);
+    db.execute(sql);
+}
+</div>
+</div>
+
+<div class="box-tech">
+<h4>💾 多级缓存 —— "越近越快，层层拦截"</h4>
+<p><b>解决什么问题</b>：80%的请求其实在查同样的热点数据（如活动配置、库存），每次都查数据库太浪费。</p>
+<p><b>怎么实现</b>：设计三级拦截：浏览器本地缓存（最前）→ CDN边缘缓存 → Caffeine应用缓存 → Redis分布式缓存 → 数据库（最后）。请求尽可能在前面被拦住，只有极少数落到数据库。</p>
+<p><b>在本项目中的应用</b>：活动规则查询、秒杀库存查询、排行榜查询、题目内容查询。</p>
+<div class="code-block">
+// 伪代码：多级缓存读取
+function getActivity(id) {
+    // L1: 本地缓存（&lt;1ms）
+    data = caffeine.get(id);
+    if (data) return data;
+    // L2: Redis（&lt;5ms）
+    data = redis.get("activity:" + id);
+    if (data) {
+        caffeine.put(id, data);  // 回填本地
+        return data;
+    }
+    // L3: 数据库（&lt;50ms）
+    data = db.query("SELECT * FROM activity WHERE id=?", id);
+    redis.set("activity:" + id, data, 300);  // 回填Redis
+    caffeine.put(id, data);                  // 回填本地
+    return data;
+}
+</div>
+</div>
+
+<div class="tip">
+💡 <b>核心认知</b>：并发问题的本质不是"人多"，而是"多人同时操作同一份数据，且操作之间没有隔离"。分布式锁解决"写冲突"，消息队列解决"写压力"，多级缓存解决"读压力"。三者叠加，系统才能从"一崩全崩"进化为"高并发下仍稳定"。
+</div>
+</div>
+
+<!-- ==================== 第六章：安全问题理解 ==================== -->
+<div class="section">
+<h2>第六章：安全问题理解 —— 风控层怎么防刷票、防薅羊毛？</h2>
+
+<h3>6.1 安全威胁的真实场景</h3>
+<div class="box-scene">
+<h4>📍 场景1：刷票（歌手大赛投票）</h4>
+<p>某选手粉丝群组织刷票：10台手机连同一WiFi，每秒钟自动点击投票按钮。传统系统只看"一个账号投一次"，但10个账号就是10台设备的真实操作吗？不是，背后是1个人在操作。</p>
+</div>
+<div class="box-scene">
+<h4>📍 场景2：薅羊毛（优惠券领取）</h4>
+<p>羊毛党使用接码平台注册100个手机号，批量领取优惠券后转卖。系统只看到"100个不同手机号"，但背后是同一批设备、同一IP段、甚至相同的鼠标点击轨迹。</p>
+</div>
+<div class="box-scene">
+<h4>📍 场景3：考试作弊（防诈骗测评）</h4>
+<p>学生A把账号给代考机构，代考机构在异地登录，5分钟答完所有题且正确率100%。或者学生B切屏搜索答案，系统没有任何感知。</p>
+</div>
+
+<h3>6.2 风控架构分层</h3>
+<div class="mermaid">
+graph TD
+    A[用户请求] --> B[L1 入口层<br/>IP限频/账号限次/设备黑名单]
+    B -->|通过| C[L2 行为层<br/>设备指纹/鼠标轨迹/切屏检测]
+    C -->|通过| D[L3 数据层<br/>答案相似度/团伙检测/异常聚合]
+    D -->|通过| E[业务处理]
+    D -->|可疑| F[人工复核/二次验证]
+    C -->|可疑| F
+    B -->|拦截| G[直接拒绝]
+    style B fill:#fff8e1,stroke:#b06000
+    style C fill:#e8f0fe,stroke:#1a73e8
+    style D fill:#e6f4ea,stroke:#137333
+    style G fill:#fce8e6,stroke:#c5221f
+</div>
+
+<h3>6.3 三层防御的具象逻辑</h3>
+
+<div class="box-tech">
+<h4>🛡️ L1 入口层：规则硬拦截（毫秒级）</h4>
+<p><b>手段</b>：</p>
+<ul>
+<li><b>IP限频</b>：同一IP 1秒内最多5次请求，超限直接拒绝（防脚本高频刷）</li>
+<li><b>账号限次</b>：同一账号每天最多投3票/领2张券（防单账号重复薅）</li>
+<li><b>设备黑名单</b>：已知作弊设备直接拦截（基于历史风控标记）</li>
+</ul>
+<p><b>在本项目中的应用</b>：秒杀下单前的令牌桶限流、投票接口的IP+账号双重限频。</p>
+</div>
+
+<div class="box-tech">
+<h4>🛡️ L2 行为层：机器 vs 真人（百毫秒级）</h4>
+<p><b>手段</b>：</p>
+<ul>
+<li><b>设备指纹</b>：采集Canvas指纹、字体列表、电池状态、屏幕分辨率，生成唯一设备ID。同一设备登录多个账号 = 高度可疑</li>
+<li><b>行为序列</b>：记录鼠标移动轨迹、点击间隔、滑动速度。机器操作通常是"直线移动、固定间隔、无抖动"</li>
+<li><b>切屏检测</b>：前端JS监听visibilitychange事件，切屏次数超过阈值自动标记</li>
+<li><b>答题时长异常</b>：正常学习视频10分钟，答题5分钟；若打开页面30秒就交卷且全对 = 可疑</li>
+</ul>
+<p><b>在本项目中的应用</b>：测评活动的切屏检测、投票活动的设备指纹绑定、抽奖活动的行为验证码（滑动拼图）。</p>
+</div>
+
+<div class="box-tech">
+<h4>🛡️ L3 数据层：团伙与模式分析（分钟级）</h4>
+<p><b>手段</b>：</p>
+<ul>
+<li><b>答案相似度</b>：SimHash算法比对答卷向量，相似度>85%视为"雷同卷"</li>
+<li><b>团伙检测</b>：Louvain图算法分析"IP聚集+答题时间聚集+答案一致"的社群，揪出组织性作弊</li>
+<li><b>时序异常</b>：某账号在1秒内完成"打开页面→答题→交卷"全流程，明显非人类操作</li>
+</ul>
+<p><b>在本项目中的应用</b>：考试结束后批量扫描雷同卷、活动期间实时检测团伙刷票。</p>
+</div>
+
+<h3>6.4 风控与业务架构的集成点</h3>
+<div class="mermaid">
+sequenceDiagram
+    actor User as 用户
+    participant Front as 前端SDK
+    participant Gateway as 网关
+    participant Risk as 风控引擎
+    participant Cache as 风控缓存
+    participant Business as 业务服务
+
+    User->>Front: 打开活动页
+    Front->>Front: 采集设备指纹+行为数据
+    Front->>Gateway: 请求带指纹参数
+    Gateway->>Risk: 提交设备+IP+账号
+    Risk->>Cache: 查历史风险标记
+    Cache-->>Risk: 返回风险分
+    Risk-->>Gateway: 决策：通过/挑战/拦截
+    alt 拦截
+        Gateway-->>User: "存在异常，请联系管理员"
+    else 挑战
+        Gateway-->>User: 弹出行为验证码
+        User->>Gateway: 完成验证
+        Gateway->>Risk: 二次校验
+    else 通过
+        Gateway->>Business: 正常执行业务
+        Business-->>User: 返回结果
+    end
+</div>
+
+<div class="tip">
+💡 <b>核心认知</b>：风控不是"加验证码"那么简单，而是<b>从入口到数据全链路立体防御</b>。L1拦 obvious 攻击，L2区分人机，L3揪出团伙。三层叠加，才能把羊毛党和刷票行为从"事后发现"变成"事中拦截"。
+</div>
+</div>
+
+<!-- ==================== 第七章：五大模块速查映射 ==================== -->
+<div class="section">
+<h2>第七章：五大模块速查映射 —— 基础概念→技术模块总表</h2>
+
+<p>本章把前六章的基础概念，快速对应到五大技术模块。这是进入第二轮（模块实战）前的"导航图"。</p>
+
+<table>
+<tr>
+<th style="width:18%">基础概念</th>
+<th style="width:22%">对应痛点</th>
+<th style="width:25%">在哪章学的</th>
+<th style="width:35%">对应技术模块（第二轮展开）</th>
+</tr>
+<tr>
+<td><b>零代码配置</b><br/>JSON规则包+模板引擎</td>
+<td>上线慢</td>
+<td>第四章</td>
+<td>模块一：SpringBoot3架构<br/>（模板配置+API自动生成）</td>
+</tr>
+<tr>
+<td><b>多级缓存</b><br/>Caffeine+Redis+差异化TTL</td>
+<td>峰值崩溃<br/>接口响应慢</td>
+<td>第二章、第五章</td>
+<td>模块二：多级缓存+热点治理<br/>（HeavyKeeper+防击穿/雪崩）</td>
+</tr>
+<tr>
+<td><b>异步削峰</b><br/>Pulsar排队+批量消费</td>
+<td>峰值崩溃<br/>DB IO过高</td>
+<td>第二章、第五章</td>
+<td>模块三：消息队列削峰<br/>（异步批量+可靠性保障）</td>
+</tr>
+<tr>
+<td><b>分布式存储</b><br/>自动分片+分布式事务</td>
+<td>数据不一致<br/>单机瓶颈</td>
+<td>第二章、第三章</td>
+<td>模块四：TiDB分布式扩容<br/>（零侵入迁移+HTAP分析）</td>
+</tr>
+<tr>
+<td><b>高可用降级</b><br/>限流+熔断+功能分级</td>
+<td>服务宕机<br/>极端崩溃</td>
+<td>第五章、第六章</td>
+<td>模块五：流量管控+降级<br/>（Redis哨兵+多级降级）</td>
+</tr>
+<tr>
+<td><b>多租户隔离</b><br/>tenant_id+行级隔离</td>
+<td>数据混乱<br/>客户数据串扰</td>
+<td>第三章</td>
+<td>模块一：SpringBoot3架构<br/>（MyBatis-Plus插件）</td>
+</tr>
+<tr>
+<td><b>风控立体防御</b><br/>设备指纹+行为分析+团伙检测</td>
+<td>风控弱</td>
+<td>第六章</td>
+<td>贯穿模块一至五<br/>（身份认证+规则引擎+数据层）</td>
+</tr>
+<tr>
+<td><b>Long精度修复</b><br/>Jackson转String</td>
+<td>数据不一致<br/>前端展示错误</td>
+<td>第二章</td>
+<td>模块一：SpringBoot3架构<br/>（全局序列化配置）</td>
+</tr>
+<tr>
+<td><b>分布式锁</b><br/>Redis SETNX</td>
+<td>超卖<br/>重复领取</td>
+<td>第五章</td>
+<td>模块二+三+四<br/>（库存扣减原子保护）</td>
+</tr>
+</table>
+
+<h3>7.1 从"看懂基础"到"看懂架构图"的钥匙</h3>
+<div class="mermaid">
+graph LR
+    A[看懂基础<br/>本手册前六章] --> B[看懂架构图<br/>知道每个方块是干嘛的]
+    B --> C[看懂时序图<br/>知道箭头代表什么数据]
+    C --> D[进入第二轮<br/>五大模块实战拆解]
+    style A fill:#e6f4ea,stroke:#137333
+    style D fill:#e8f0fe,stroke:#1a73e8
+</div>
+
+<div class="box-pain">
+<h4>🔴 第二轮将要验证和深化的内容（预告）</h4>
+<ul>
+<li>模块一：SpringBoot3全局配置是否真的解决了CORS和Long精度？MyBatis-Plus多租户插件在高并发下有无性能损耗？</li>
+<li>模块二：HeavyKeeper热点探测的准确率如何？Caffeine+Redis两级缓存的命中率在不同活动类型下是否稳定？</li>
+<li>模块三：Pulsar批量消费的消息丢失风险如何兜底？本地消息表方案与Saga模式哪种更适合本项目？</li>
+<li>模块四：TiDB迁移后，MyBatis-Plus的乐观锁与TiDB悲观事务如何取舍？HTAP查询对OLTP写入有无影响？</li>
+<li>模块五：Redis哨兵切换期间的业务中断如何量化？功能分级降级的开关粒度如何设计才不被客户感知？</li>
+</ul>
+</div>
+</div>
+
+<!-- ==================== 结尾 ==================== -->
+<div class="final-box">
+<h2>第一轮总结：基础递进全景手册核心收获</h2>
+
+<table>
+<tr>
+<th style="background:#303134;color:#8ab4f8;border-color:#5f6368;">认知层级</th>
+<th style="background:#303134;color:#8ab4f8;border-color:#5f6368;">核心收获</th>
+<th style="background:#303134;color:#8ab4f8;border-color:#5f6368;">对应后续能力</th>
+</tr>
+<tr>
+<td><b>目标层</b></td>
+<td>理解"零代码实时活动中台"解决谁的什么问题</td>
+<td>能向客户/面试官讲清项目价值</td>
+</tr>
+<tr>
+<td><b>技术层</b></td>
+<td>知道SpringBoot3/Redis/Caffeine/Pulsar/TiDB各自定位和协作关系</td>
+<td>能看懂架构图，知道数据怎么流转</td>
+</tr>
+<tr>
+<td><b>数据层</b></td>
+<td>理解activity/behavior/order/coupon四张表的作用和关联</td>
+<td>能设计数据流，知道为什么不会串数据</td>
+</tr>
+<tr>
+<td><b>功能层</b></td>
+<td>明白"拖拽配置→JSON规则→模板渲染→实时校验"的零代码闭环</td>
+<td>能向产品经理解释技术可行性边界</td>
+</tr>
+<tr>
+<td><b>并发层</b></td>
+<td>掌握分布式锁、消息队列、多级缓存的适用场景和原理</td>
+<td>能从"峰值崩溃"痛点反推技术选型</td>
+</tr>
+<tr>
+<td><b>安全层</b></td>
+<td>理解L1/L2/L3三层风控如何对应防刷票、防薅羊毛、防作弊</td>
+<td>能设计安全层架构，知道风控节点在哪</td>
+</tr>
+</table>
+
+<div style="background:#303134;padding:20px;border-radius:8px;margin-top:24px;border-left:4px solid #8ab4f8;">
+<strong style="color:#8ab4f8;">进入第二轮的前提：</strong>
+<p style="margin:8px 0 0 0;color:#e8eaed;">
+当你能不看手册，向一个完全不懂技术的人讲清楚以下三句话时，第一轮目标达成：<br/>
+1. "为什么活动系统会崩？因为所有人同时请求直接打数据库，我们用缓存和队列把流量拦住。"<br/>
+2. "为什么能零代码？因为活动的规则变成JSON存在数据库里，前端模板根据JSON自动渲染。"<br/>
+3. "为什么数据不会乱？因为每个客户的数据带tenant_id标签，数据库自动隔离；扣库存时用分布式锁排队。"
+</p>
+</div>
+</div>
+
+<script>
+mermaid.initialize({startOnLoad:true,theme:'default'});
+</script>
+</body>
+</html>

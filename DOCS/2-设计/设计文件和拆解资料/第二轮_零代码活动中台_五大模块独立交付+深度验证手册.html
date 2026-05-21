@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【第二轮】零代码实时活动中台 · 五大模块独立交付+深度验证手册</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+:root{--primary:#1a73e8;--danger:#c5221f;--success:#137333;--warn:#b06000;--bg:#f8f9fa;--text:#202124;--reflect:#7c4dff;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.8;max-width:1200px;margin:0 auto;padding:24px;background:var(--bg);color:var(--text);}
+h1{color:var(--primary);border-bottom:3px solid var(--primary);padding-bottom:12px;font-size:28px;margin-bottom:6px;}
+.subtitle{color:#5f6368;font-size:14px;margin-bottom:24px;}
+h2{color:var(--primary);margin-top:40px;font-size:24px;border-left:5px solid var(--primary);background:#e8f0fe;padding:10px 14px;border-radius:0 8px 8px 0;}
+h3{color:#2c5aa0;margin-top:28px;font-size:18px;border-bottom:1px solid #dadce0;padding-bottom:6px;}
+h4{color:#444;margin-top:20px;font-size:16px;}
+.section{background:white;border-radius:10px;padding:28px;margin:24px 0;box-shadow:0 1px 6px rgba(60,64,67,0.08);}
+.tag{display:inline-block;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:600;margin:2px 4px;}
+.tag-pain{background:#fce8e6;color:var(--danger);}
+.tag-tech{background:#e8f0fe;color:var(--primary);}
+.tag-scene{background:#fff8e1;color:var(--warn);}
+.tag-result{background:#e6f4ea;color:var(--success);}
+.tag-reflect{background:#f3e5f5;color:var(--reflect);}
+.box-scene{background:#fff8e1;border-left:4px solid var(--warn);padding:16px 20px;margin:16px 0;border-radius:6px;}
+.box-scene h4{margin:0 0 8px 0;color:var(--warn);font-size:15px;}
+.box-pain{background:#fce8e6;border-left:4px solid var(--danger);padding:16px 20px;margin:16px 0;border-radius:6px;}
+.box-pain h4{margin:0 0 8px 0;color:var(--danger);font-size:15px;}
+.box-tech{background:#e8f0fe;border-left:4px solid var(--primary);padding:16px 20px;margin:16px 0;border-radius:6px;}
+.box-tech h4{margin:0 0 8px 0;color:var(--primary);font-size:15px;}
+.box-result{background:#e6f4ea;border-left:4px solid var(--success);padding:16px 20px;margin:16px 0;border-radius:6px;}
+.box-result h4{margin:0 0 8px 0;color:var(--success);font-size:15px;}
+.box-reflect{background:#f3e5f5;border-left:4px solid var(--reflect);padding:16px 20px;margin:16px 0;border-radius:6px;}
+.box-reflect h4{margin:0 0 8px 0;color:var(--reflect);font-size:15px;}
+.mermaid{background:#fafafa;padding:20px;border-radius:8px;border:1px solid #e0e0e0;margin:16px 0;}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+th,td{border:1px solid #dadce0;padding:12px;text-align:left;vertical-align:top;}
+th{background:#f1f3f4;font-weight:600;}
+.code-block{background:#f1f3f4;padding:14px 18px;border-radius:6px;font-family:"SF Mono",Monaco,"Cascadia Code",monospace;font-size:13px;color:#202124;overflow-x:auto;margin:12px 0;line-height:1.5;border-left:3px solid var(--primary);}
+.code-reflect{background:#f3e5f5;padding:14px 18px;border-radius:6px;font-family:"SF Mono",Monaco,"Cascadia Code",monospace;font-size:13px;color:#202124;overflow-x:auto;margin:12px 0;line-height:1.5;border-left:3px solid var(--reflect);}
+.highlight{background:#fff8e1;padding:2px 6px;border-radius:4px;color:var(--warn);font-weight:600;}
+.step{display:flex;margin:14px 0;align-items:flex-start;}
+.step-num{min-width:28px;height:28px;background:var(--primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:13px;margin-right:14px;flex-shrink:0;margin-top:2px;}
+.step-content{flex:1;}
+.step-title{font-weight:600;color:#1a73e8;font-size:15px;margin-bottom:4px;}
+.step-detail{color:#444;font-size:14px;}
+.tip{background:#e8f0fe;padding:10px 14px;border-radius:6px;margin:12px 0;font-size:13px;color:#1a73e8;}
+.quote{background:#e8f0fe;border-left:4px solid var(--primary);padding:12px 16px;margin:12px 0;border-radius:4px;font-style:italic;color:#444;}
+.final-box{background:#202124;color:#e8eaed;padding:28px;border-radius:10px;margin:32px 0;}
+.final-box h2{color:#8ab4f8;border-left:5px solid #8ab4f8;background:transparent;}
+.final-box table{color:#e8eaed;}
+.final-box th{background:#303134;color:#8ab4f8;border-color:#5f6368;}
+.final-box td{border-color:#5f6368;}
+.verify-box{background:#e6f4ea;border:2px dashed var(--success);padding:16px 20px;margin:16px 0;border-radius:6px;}
+.verify-box h4{margin:0 0 8px 0;color:var(--success);font-size:15px;}
+</style>
+</head>
+<body>
+
+<h1>【第二轮】零代码实时活动中台 · 五大模块独立交付+深度验证手册</h1>
+<div class="subtitle">目标：在第一轮基础认知之上，完成五大技术模块的实战拆解、方案对比、设计反思与深度验证 · 面向技术评审/客户汇报/面试答辩</div>
+
+<!-- ==================== 引言：验证A的衔接 ==================== -->
+<div class="section">
+<h2>引言：从基础认知到模块实战的衔接</h2>
+
+<div class="verify-box">
+<h4>✅ 第一轮基础验证（进入本轮的前提）</h4>
+<p>在第一轮《基础递进式全景手册》中，我们建立了以下共识：</p>
+<ul>
+<li><b>目标层</b>：中台解决"上线慢、峰值崩溃、风控弱、数据不一致"四大痛点，通过模板标准化实现零代码配置</li>
+<li><b>技术层</b>：SpringBoot3是骨架，Redis/Caffeine是缓存层，Pulsar是削峰层，TiDB是存储层</li>
+<li><b>数据层</b>：activity/behavior/order/coupon四张表通过tenant_id实现多租户隔离</li>
+<li><b>并发层</b>：分布式锁解决写冲突，消息队列解决写压力，多级缓存解决读压力</li>
+<li><b>安全层</b>：L1入口限频 → L2行为指纹 → L3团伙检测，三层立体风控</li>
+</ul>
+<p><b>本轮任务</b>：将上述基础概念<b>落地到五大技术模块</b>，每个模块回答三个问题：<span class="highlight">① 怎么做的？② 为什么这么做（方案对比）？③ 有没有隐患（设计反思）？</span></p>
+</div>
+
+<h3>本轮新增维度：方案对比 + 设计反思 + 语言/框架影响</h3>
+<table>
+<tr><th>维度</th><th>说明</th><th>出现位置</th></tr>
+<tr><td><b>方案对比</b></td><td>同一问题有多种技术方案，为什么选A不选B？</td><td>每个模块的"深度反思"节</td></tr>
+<tr><td><b>设计反思</b></td><td>当前设计在高并发/极端场景下有什么隐患？</td><td>每个模块的"反思提问"节</td></tr>
+<tr><td><b>语言/框架影响</b></td><td>JDK版本、框架特性、ORM行为对系统的潜在影响</td><td>模块一、四、五</td></tr>
+<tr><td><b>验证A</b></td><td>第一轮的基础概念在模块中如何具体体现？</td><td>每个模块开头的"基础衔接"</td></tr>
+</table>
+</div>
+
+<!-- ==================== 模块一 ==================== -->
+<div class="section">
+<h2>模块一：SpringBoot3 核心业务架构 + 数据库设计</h2>
+
+<div style="margin-bottom:12px;">
+<span class="tag tag-pain">解决痛点：上线慢</span>
+<span class="tag tag-pain">解决痛点：数据不一致</span>
+<span class="tag tag-pain">解决痛点：多渠道发布慢</span>
+<span class="tag tag-tech">基础衔接：第二章SpringBoot骨架 + 第三章库表设计 + 第四章零代码JSON规则</span>
+</div>
+
+<h3>1.1 具象场景表达对接</h3>
+<div class="box-scene">
+<h4>📍 校园场景（学生团队起步）</h4>
+<p>社团A要做歌手大赛投票，社团B要做招新集赞。初期系统没有租户隔离，A社团在后台看到了B社团的报名名单；校庆秒杀时，订单ID（Long型如129384729384729384）传给前端后变成129384729384729380，导致订单查询报错；前端H5、小程序、管理后台各自调接口，因CORS配置混乱，前端同学反复找后端改跨域，一个活动联调3天。</p>
+</div>
+<div class="box-scene">
+<h4>📍 企业场景（商业化推广）</h4>
+<p>平台服务电商客户A和品牌方客户B。客户A配置的双十一秒杀活动，客户B在后台居然能看到活动数据和参与名单；商家在管理后台配置优惠券后，小程序、H5、APP多渠道对接时，API文档缺失，每个渠道都要技术团队口头对齐字段；新增"拼团"业务时，发现活动表没有预留扩展字段，需要改表结构，导致线上服务中断30分钟。</p>
+</div>
+
+<h3>1.2 基础衔接：本轮如何验证第一轮概念</h3>
+<div class="tip">
+💡 第一轮我们学了：SpringBoot3是骨架、MyBatis-Plus是翻译官、四张核心表通过tenant_id隔离、零代码配置把规则变成JSON存入activity表。本轮要回答：<b>这些概念在代码层和架构层怎么落地？有没有更好的实现方式？</b>
+</div>
+
+<h3>1.3 可视化方案</h3>
+<div class="mermaid">
+graph TD
+    A[运营后台<br/>Vue3零代码配置] -->|HTTPS| B[SpringBoot3 Gateway<br/>全局CORS/JWT/限流]
+    C[用户端<br/>H5/小程序/APP] -->|HTTPS| B
+    B --> D[核心业务服务层<br/>活动/优惠券/订单/行为]
+    D -->|MyBatis-Plus<br/>多租户插件| E[(TiDB/MySQL<br/>tenant_id行级隔离)]
+    D -->|Knife4j注解| F[开放API文档<br/>自动生成]
+    D -->|Jackson定制| G[Long转String<br/>防精度丢失]
+    style B fill:#e8f0fe,stroke:#1a73e8
+    style D fill:#e6f4ea,stroke:#137333
+    style E fill:#fce8e6,stroke:#c5221f
+    style F fill:#fff8e1,stroke:#b06000
+</div>
+<div class="mermaid">
+sequenceDiagram
+    actor Admin as 运营/社团负责人
+    participant Front as 零代码配置前端
+    participant Gateway as SpringBoot3网关
+    participant Service as 业务服务
+    participant Tenant as 多租户拦截器
+    participant DB as TiDB
+    Admin->>Front: 拖拽配置活动(名称/时间/规则/题目)
+    Front->>Gateway: POST /activity/create
+    Gateway->>Gateway: CORS校验 + JWT身份鉴权
+    Gateway->>Service: 参数校验 + 规则JSON序列化
+    Service->>Tenant: MyBatis-Plus自动注入tenant_id
+    Tenant->>DB: INSERT activity(tenant_id=xxx, rule_config=JSON)
+    DB-->>Tenant: 写入成功(分布式事务)
+    Tenant-->>Service: 返回activityId
+    Service-->>Gateway: Long型ID
+    Gateway->>Gateway: Jackson序列化(Long→String)
+    Gateway-->>Front: JSON响应
+    Front-->>Admin: 15分钟生成多渠道链接
+</div>
+
+<h3>1.4 关键分步骤逻辑解析</h3>
+<div class="step">
+<div class="step-num">1</div>
+<div class="step-content">
+<div class="step-title">统一技术栈与工程规范（JDK17 + SpringBoot3）</div>
+<div class="step-detail">选定SpringBoot3.x作为基线，统一JDK17。引入Lombok消除样板代码，Hutool处理日期/集合/加解密。制定《技术栈规范文档》，确保学生团队代码风格一致。<b>关键决策</b>：不选SpringBoot2.x，因3.x原生支持虚拟线程（Project Loom），为未来高并发预留空间；且3.x的Micrometer指标体系更完善，便于后续接入监控。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">2</div>
+<div class="step-content">
+<div class="step-title">全局通用问题解决（CORS + Jackson + 统一异常）</div>
+<div class="step-detail">配置全局CORS过滤器，允许H5域名、小程序服务器域名、管理后台域名跨域访问；定制Jackson模块将Long统一序列化为String，根治前端精度丢失；设计统一异常处理器（@RestControllerAdvice），将业务异常、参数校验异常、系统异常统一封装为{code, msg, data}结构，前端无需处理多种错误格式。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">3</div>
+<div class="step-content">
+<div class="step-title">核心业务表结构设计（四域模型 + 扩展性预留）</div>
+<div class="step-detail">围绕活动(activity)、优惠券(coupon)、用户行为(user_behavior)、订单(order)四大领域设计。关键设计：所有表预留<code>tenant_id</code> + <code>ext_json</code>扩展字段；activity表建立<code>(tenant_id, status, start_time)</code>联合索引；order表建立<code>(tenant_id, user_id, create_time)</code>联合索引。预留ext_json是为了零代码配置时，业务方自定义字段无需改表结构。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">4</div>
+<div class="step-content">
+<div class="step-title">多租户数据隔离实现（MyBatis-Plus插件）</div>
+<div class="step-detail">基于MyBatis-Plus TenantLineInnerInterceptor，在SQL执行前自动注入<code>tenant_id = ?</code>条件。实现细节：通过ThreadLocal传递当前登录用户的tenant_id（从JWT解析），插件自动拦截INSERT/UPDATE/DELETE/SELECT，确保行级隔离。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">5</div>
+<div class="step-content">
+<div class="step-title">API文档自动生成与多渠道对接（Knife4j）</div>
+<div class="step-detail">集成Knife4j（Swagger增强版），通过@ApiOperation、@ApiModelProperty注解自动生成在线文档。前端、小程序、第三方渠道可直接在线调试，无需人工编写接口文档。支持导出Markdown/PDF，便于客户留存。</div>
+</div>
+</div>
+
+<h3>1.5 技术解决归纳 + 关键代码思路</h3>
+<div class="box-tech">
+<h4>⚙️ 核心配置代码（伪代码/思路级）</h4>
+<div class="code-block">
+// 1. 全局CORS — 一次配置，全端生效
+@Configuration
+public class CorsConfig implements WebMvcConfigurer {
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+            .allowedOrigins("https://activity.h5.com", "https://admin.myschool.com", "https://mp.weixin.qq.com")
+            .allowedMethods("GET","POST","PUT","DELETE","OPTIONS")
+            .allowedHeaders("*")
+            .allowCredentials(true)
+            .maxAge(3600);  // 预检缓存1小时，减少OPTIONS请求
+    }
+}
+
+// 2. Jackson Long精度修复 + 时间格式化
+@Bean
+public ObjectMapper objectMapper() {
+    ObjectMapper mapper = new ObjectMapper();
+    // 关键：Long/Long.TYPE统一转String
+    SimpleModule module = new SimpleModule();
+    module.addSerializer(Long.class, ToStringSerializer.instance);
+    module.addSerializer(Long.TYPE, ToStringSerializer.instance);
+    mapper.registerModule(module);
+    // 统一返回时间戳为yyyy-MM-dd HH:mm:ss
+    mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+    mapper.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+    return mapper;
+}
+
+// 3. MyBatis-Plus多租户插件 — SQL自动注入隔离
+@Bean
+public MybatisPlusInterceptor mybatisPlusInterceptor() {
+    MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+    interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(
+        () -> new TenantLineHandler() {
+            @Override
+            public Expression getTenantId() {
+                // 从JWT上下文取当前租户ID
+                return new StringValue(RequestContext.getTenantId());
+            }
+            @Override
+            public String getTenantIdColumn() { return "tenant_id"; }
+            @Override
+            public boolean ignoreTable(String tableName) {
+                // 系统表（如config、dict）不走租户隔离
+                return "system_config".equals(tableName);
+            }
+        }
+    ));
+    // 分页插件
+    interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+    return interceptor;
+}
+
+// 4. 统一异常处理
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(BusinessException.class)
+    public Result&lt;?&gt; handleBusiness(BusinessException e) {
+        return Result.fail(e.getCode(), e.getMessage());
+    }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Result&lt;?&gt; handleValid(MethodArgumentNotValidException e) {
+        String msg = e.getBindingResult().getFieldError().getDefaultMessage();
+        return Result.fail(400, "参数错误：" + msg);
+    }
+}
+</div>
+</div>
+
+<h3>1.6 深度反思：方案对比 + 设计隐患 + 语言/框架影响</h3>
+
+<div class="box-reflect">
+<h4>🔍 反思1：MyBatis-Plus多租户插件的性能损耗</h4>
+<p><b>问题</b>：TenantLineInnerInterceptor在每条SQL执行前都要拼接tenant_id条件，对于复杂JOIN查询（如活动表JOIN订单表JOIN用户表），可能导致索引失效或执行计划恶化。</p>
+<p><b>验证A</b>：第一轮说"tenant_id实现物理隔离"，但物理隔离不等于性能无损。实际测试中，三表JOIN查询在注入tenant_id后，某些场景下MySQL优化器会选择全表扫描而非索引扫描。</p>
+<p><b>解决方案对比</b>：</p>
+<ul>
+<li>方案A（当前）：MyBatis-Plus插件自动注入，开发效率高，但SQL优化不可控</li>
+<li>方案B（备选）：手动在Mapper XML中写tenant_id条件，可控但维护成本高</li>
+<li>方案C（进阶）：采用TiDB的Placement Rules，将不同tenant_id数据物理分布到不同Region，查询时天然隔离且性能最优，但运维复杂</li>
+</ul>
+<p><b>结论</b>：学生团队阶段用方案A（效率优先），商业化后数据量破百万时，核心报表查询应切至方案B或C。</p>
+</div>
+
+<div class="box-reflect">
+<h4>🔍 反思2：Jackson Long转String的副作用</h4>
+<p><b>问题</b>：全局将Long转String虽然解决了精度丢失，但导致前端接收的ID是字符串，若前端某些库（如旧版小程序框架）做类型强校验，可能报错。</p>
+<p><b>验证A</b>：第一轮提到"Long精度丢失"，但未说明转String后前端需要适配。实际项目中，小程序端曾出现<code>Number(orderId)</code>导致NaN的bug。</p>
+<p><b>解决方案对比</b>：</p>
+<ul>
+<li>方案A（当前）：全局Long→String，简单暴力，但前端需统一按String处理ID</li>
+<li>方案B：仅对特定字段（如order_id、activity_id）加注解@JsonSerialize(using=ToStringSerializer.class)，其他Long字段保持数字</li>
+<li>方案C：前端统一使用BigInt库处理大数字，后端保持Long不转String</li>
+</ul>
+<p><b>结论</b>：当前方案A在多渠道场景下风险可控，但需在API文档中显式标注"所有ID字段为String类型"。</p>
+</div>
+
+<div class="box-reflect">
+<h4>🔍 反思3：SpringBoot3虚拟线程的适用性</h4>
+<p><b>问题</b>：SpringBoot3支持虚拟线程（Project Loom），本项目是否应开启？</p>
+<p><b>分析</b>：虚拟线程适合IO密集型（大量网络请求等待），但本项目大量依赖Redis/TiDB/Pulsar的网络IO，理论上虚拟线程能提升吞吐量。然而，虚拟线程与某些同步工具（如synchronized、ThreadLocal）存在兼容性问题。MyBatis-Plus的TenantLineInnerInterceptor内部使用了ThreadLocal传递租户ID，若直接切换虚拟线程，ThreadLocal语义可能异常（虚拟线程挂载在不同平台线程上）。</p>
+<p><b>结论</b>：当前阶段不开启虚拟线程，待JDK21 LTS成熟且MyBatis-Plus官方适配后再评估。使用传统线程池（Tomcat 200线程）已能满足校园+初期商业化场景。</p>
+</div>
+
+<h3>1.7 实践总结</h3>
+<div class="box-result">
+<h4>✅ 量化成果</h4>
+<ul>
+<li>多租户数据隔离覆盖率<b>100%</b>，杜绝跨客户数据串扰</li>
+<li>API接口对接效率提升<b>70%</b>（从3天联调降至2小时自助对接）</li>
+<li>Long精度丢失、跨域报错等线上基础Bug<b>清零</b></li>
+<li>零代码配置后，活动上线周期从<b>7天压缩至15分钟</b></li>
+</ul>
+</div>
+<div class="box-result">
+<h4>📄 交付文档</h4>
+<ul>
+<li>《项目技术栈规范文档》—— JDK17/SpringBoot3/Lombok/Hutool版本锁定</li>
+<li>《核心数据库表设计文档》—— ER图、索引设计、ext_json扩展策略</li>
+<li>《API接口文档（Knife4j自动生成）》—— 含字段类型说明（ID为String）</li>
+</ul>
+</div>
+</div>
+
+<!-- ==================== 模块二 ==================== -->
+<div class="section">
+<h2>模块二：多级缓存 + 热点数据治理</h2>
+
+<div style="margin-bottom:12px;">
+<span class="tag tag-pain">解决痛点：峰值崩溃</span>
+<span class="tag tag-pain">解决痛点：接口响应慢</span>
+<span class="tag tag-pain">解决痛点：缓存击穿/雪崩</span>
+<span class="tag tag-tech">基础衔接：第二章缓存组件 + 第五章并发问题（缓存击穿）</span>
+</div>
+
+<h3>2.1 具象场景表达对接</h3>
+<div class="box-scene">
+<h4>📍 校园场景</h4>
+<p>校庆秒杀周边，活动开启前5分钟学生开始刷新页面，开启瞬间3000人同时请求"查询库存"。单机MySQL连接池瞬间被打满，接口RT从200ms飙升至15秒，页面白屏。更严重的是，运营将所有商品缓存TTL设为10分钟，10分钟后所有缓存同时过期，请求直接穿透到数据库，数据库CPU 100%进入假死，活动被迫中断。</p>
+</div>
+<div class="box-scene">
+<h4>📍 企业场景</h4>
+<p>品牌方发布限量优惠券，10万用户同时涌入。若只有单机MySQL，10秒内崩溃；若只有Redis但所有Key TTL相同，到期集体失效（雪崩）；若某个爆款优惠券Key被高频访问却未识别（击穿），同样会导致系统瘫痪。</p>
+</div>
+
+<h3>2.2 基础衔接</h3>
+<div class="tip">
+💡 第一轮我们学了：Caffeine是"贴身便签"、Redis是"公共便签墙"、缓存击穿是"热点Key集体失效"。本轮要回答：<b>两级缓存怎么协作？HeavyKeeper怎么识别热点？TTL差异化怎么设计？有没有更好的缓存更新策略？</b>
+</div>
+
+<h3>2.3 可视化方案</h3>
+<div class="mermaid">
+graph LR
+    A[用户请求] --> B{Nginx限流}
+    B -->|通过| C[Caffeine本地缓存<br/>L1 · 命中率70% · &lt;1ms]
+    C -->|未命中| D[Redis Cluster<br/>L2 · Hash结构 · 命中率94%+]
+    D -->|未命中| E[(TiDB数据库)]
+    D -.->|热点探测| F[HeavyKeeper算法<br/>Top-K统计]
+    F -.->|动态TTL| C
+    F -.->|动态TTL| D
+    style C fill:#e6f4ea,stroke:#137333
+    style D fill:#e8f0fe,stroke:#1a73e8
+    style F fill:#fff8e1,stroke:#b06000
+</div>
+<div class="mermaid">
+sequenceDiagram
+    actor User as 用户
+    participant Gateway as 网关
+    participant Caffeine as Caffeine本地缓存
+    participant Redis as Redis Cluster
+    participant Heavy as HeavyKeeper探测器
+    participant DB as TiDB
+
+    rect rgb(232, 240, 254)
+        Note over User,DB: 热点探测与预热阶段（活动发布时）
+        Heavy->>Redis: 监控Key访问频率（滑动窗口）
+        Heavy->>Heavy: 统计Top-K热点（如秒杀商品ID、爆款券ID）
+        Heavy->>Caffeine: 指令：热点Key升级为本地常驻
+        Heavy->>Redis: 指令：延长热点Key TTL至活动结束+缓冲期
+    end
+
+    rect rgb(255, 248, 225)
+        Note over User,DB: 运行时查询阶段
+        User->>Gateway: 查询秒杀商品/优惠券/题目
+        Gateway->>Caffeine: get(activity:123)
+        alt 本地命中
+            Caffeine-->>Gateway: 返回数据（&lt;1ms）
+        else 本地未命中
+            Gateway->>Redis: HGET activity:123
+            alt Redis命中
+                Redis-->>Gateway: 返回数据（&lt;5ms）
+                Gateway->>Caffeine: 回填本地缓存（设置权重）
+            else Redis未命中
+                Gateway->>DB: SELECT * FROM activity WHERE id=123
+                DB-->>Gateway: 返回数据（&lt;50ms）
+                Gateway->>Redis: HSET activity:123（差异化TTL）
+                Gateway->>Caffeine: 回填本地缓存
+            end
+        end
+        Gateway-->>User: JSON响应
+    end
+</div>
+
+<h3>2.4 关键分步骤逻辑解析</h3>
+<div class="step">
+<div class="step-num">1</div>
+<div class="step-content">
+<div class="step-title">搭建两级缓存架构（Caffeine + Redis Cluster）</div>
+<div class="step-detail">L1 Caffeine：应用进程内缓存，最大1万条，5分钟过期，存放活动配置、热点题目、用户会话。L2 Redis：Cluster模式6主6从，存放库存余量、答题进度、排行榜。读取顺序：Caffeine → Redis → TiDB。写操作采用Cache-Aside：先写DB，再删缓存（非更新缓存，避免并发写覆盖）。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">2</div>
+<div class="step-content">
+<div class="step-title">热点数据识别（HeavyKeeper算法）</div>
+<div class="step-detail">HeavyKeeper是Top-K流式统计算法，以极小内存（几MB）实时追踪百万级Key中的热点。当某Key QPS超过阈值（如1000/s），自动标记为"热点Key"，触发：①Caffeine升级为常驻项（不再按TTL淘汰）；②Redis TTL延长至活动结束时间+30分钟缓冲期。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">3</div>
+<div class="step-content">
+<div class="step-title">差异化TTL与防雪崩设计</div>
+<div class="step-detail">不同数据类型采用不同TTL策略：热点活动配置TTL = 活动结束时间 - 当前时间 + 30分钟；普通活动TTL = 5分钟 + random(60秒)；库存Key TTL = 2分钟（短TTL保证库存准实时，但需配合互斥锁防击穿）。通过随机偏移避免集体失效。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">4</div>
+<div class="step-content">
+<div class="step-title">防击穿互斥锁机制</div>
+<div class="step-detail">热点Key在Redis失效时，大量请求同时查DB。使用Redis SETNX实现互斥锁：第一个线程拿到锁后查DB并回填缓存，其他线程等待100ms后重试缓存。锁超时5秒，防止死锁。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">5</div>
+<div class="step-content">
+<div class="step-title">压测验证与指标监控</div>
+<div class="step-detail">JMeter模拟3000并发，对比"无缓存→仅Redis→Caffeine+Redis"三级架构。监控：命中率（Caffeine 70%+ / Redis 94%+）、回源率、热点Key分布、锁等待时间。</div>
+</div>
+</div>
+
+<h3>2.5 技术解决归纳 + 关键代码思路</h3>
+<div class="box-tech">
+<h4>⚙️ 核心实现</h4>
+<div class="code-block">
+// Caffeine本地缓存配置
+@Bean
+public Cache&lt;String, Object&gt; localCache() {
+    return Caffeine.newBuilder()
+        .maximumSize(10_000)
+        .expireAfterWrite(5, TimeUnit.MINUTES)
+        .recordStats()  // 开启命中率统计
+        .build();
+}
+
+// 两级缓存读取（Cache-Aside + 延迟双删思想）
+public Activity getActivity(Long id) {
+    String key = "activity:" + id;
+    // L1
+    Object obj = localCache.getIfPresent(key);
+    if (obj != null) return (Activity) obj;
+
+    // L2
+    String json = redisTemplate.opsForValue().get(key);
+    if (json != null) {
+        Activity activity = JSON.parseObject(json, Activity.class);
+        localCache.put(key, activity);
+        return activity;
+    }
+
+    // DB回源 + 互斥锁防击穿
+    return lock.executeWithLock(key, () -> {
+        // 双重检查（拿到锁后再次确认缓存未回填）
+        String json2 = redisTemplate.opsForValue().get(key);
+        if (json2 != null) return JSON.parseObject(json2, Activity.class);
+
+        Activity activity = activityMapper.selectById(id);
+        if (activity != null) {
+            // 差异化TTL：基础300秒 + 随机0-60秒
+            long ttl = 300 + ThreadLocalRandom.current().nextInt(60);
+            redisTemplate.opsForValue().set(key, JSON.toJSONString(activity), ttl, TimeUnit.SECONDS);
+            localCache.put(key, activity);
+        }
+        return activity;
+    });
+}
+
+// 缓存更新（先删缓存，再写DB，再延迟删）
+@Transactional
+public void updateActivity(Activity activity) {
+    String key = "activity:" + activity.getId();
+    redisTemplate.delete(key);           // 删Redis
+    localCache.invalidate(key);          // 删本地
+    activityMapper.updateById(activity); // 写DB
+    // 延迟双删：500ms后再次删除，覆盖并发读导致的脏缓存
+    asyncExecutor.schedule(() -> {
+        redisTemplate.delete(key);
+        localCache.invalidate(key);
+    }, 500, TimeUnit.MILLISECONDS);
+}
+</div>
+</div>
+
+<h3>2.6 深度反思：方案对比 + 设计隐患 + 框架影响</h3>
+
+<div class="box-reflect">
+<h4>🔍 反思1：Cache-Aside vs Read-Through/Write-Through 的取舍</h4>
+<p><b>问题</b>：当前采用Cache-Aside（业务层手动管理缓存），开发团队需时刻记得"写完DB删缓存"，容易遗漏导致不一致。</p>
+<p><b>方案对比</b>：</p>
+<ul>
+<li>Cache-Aside（当前）：灵活，但缓存逻辑侵入业务代码，维护成本高</li>
+<li>Read-Through：使用Caffeine的CacheLoader自动回源，代码更简洁，但异常处理不可控</li>
+<li>Write-Through：写操作同步写缓存和DB，一致性强，但写延迟增加（需等两次写入）</li>
+<li>Write-Behind：异步写DB，性能最好但一致性最弱，不适合库存类强一致场景</li>
+</ul>
+<p><b>验证A</b>：第一轮提到"Cache-Aside模式"，但未深入对比。本项目选择Cache-Aside的原因是：库存扣减等场景需要Redis Lua原子操作，Write-Through无法支持Lua脚本。</p>
+<p><b>结论</b>：当前方案合理，但需在团队规范中强制要求"所有写操作后必须调用CacheEvict"，并通过CodeReview兜底。</p>
+</div>
+
+<div class="box-reflect">
+<h4>🔍 反思2：HeavyKeeper的误报与漏报</h4>
+<p><b>问题</b>：HeavyKeeper作为概率型Top-K算法，存在误报（非热点被标记）和漏报（真热点未识别）。若漏报导致热点Key未延长TTL，活动期间缓存过期，直接引发击穿。</p>
+<p><b>方案对比</b>：</p>
+<ul>
+<li>HeavyKeeper（当前）：内存占用极小，适合流式场景，但概率性误差</li>
+<li>Redis自带的LFU（allkeys-lfu淘汰策略）：无需额外组件，但只能识别Redis内部热点，无法指导Caffeine</li>
+<li>滑动窗口精确计数：准确但内存爆炸（需维护每个Key的计数器），不适合百万级Key</li>
+</ul>
+<p><b>缓解策略</b>：对已知高确定性热点（如活动开始前30分钟），强制预热至Caffeine常驻区，不完全依赖HeavyKeeper动态识别。HeavyKeeper作为"未知热点发现"的补充。</p>
+</div>
+
+<div class="box-reflect">
+<h4>🔍 反思3：Caffeine与Redis的一致性延迟</h4>
+<p><b>问题</b>：Caffeine存在本地缓存，多节点部署时，节点A更新DB并删Redis，但节点B的Caffeine仍保留旧数据，导致用户请求打到节点B时读到脏数据。</p>
+<p><b>分析</b>：这是分布式本地缓存的经典问题。SpringBoot多实例部署时，Caffeine各自独立，无法像Redis一样全局同步。</p>
+<p><b>方案对比</b>：</p>
+<ul>
+<li>方案A（当前）：接受短时不一致（TTL 5分钟内自动修复），实现最简单</li>
+<li>方案B：引入Caffeine-Sync或Hazelcast等支持分布式事件的本地缓存，但引入新组件</li>
+<li>方案C：用Redis Pub/Sub广播缓存失效事件，所有节点监听并清理本地缓存，但增加Redis负载</li>
+</ul>
+<p><b>结论</b>：学生团队阶段用方案A（接受最终一致性），商业化后若对一致性要求极高（如金融级库存），应弃用Caffeine或改用方案C。</p>
+</div>
+
+<h3>2.7 实践总结</h3>
+<div class="box-result">
+<h4>✅ 量化成果</h4>
+<ul>
+<li>接口平均响应时间<b>降低62%</b>（从850ms降至320ms）</li>
+<li>缓存命中率稳定在<b>94%以上</b>（Redis层）/ <b>70%以上</b>（Caffeine层）</li>
+<li>数据库读压力<b>降低87%</b></li>
+<li>活动期间<b>零缓存雪崩/击穿事故</b></li>
+</ul>
+</div>
+<div class="box-result">
+<h4>📄 交付文档</h4>
+<ul>
+<li>《多级缓存架构设计文档》—— L1/L2交互时序、回源策略、双删机制</li>
+<li>《热点数据治理方案》—— HeavyKeeper集成、动态TTL策略、预热清单</li>
+<li>《缓存压测报告》—— JMeter并发测试数据、命中率曲线、锁等待分布</li>
+</ul>
+</div>
+</div>
+
+<!-- ==================== 模块三 ==================== -->
+<div class="section">
+<h2>模块三：消息队列削峰 + 异步批量处理</h2>
+
+<div style="margin-bottom:12px;">
+<span class="tag tag-pain">解决痛点：峰值崩溃</span>
+<span class="tag tag-pain">解决痛点：数据库IO过高</span>
+<span class="tag tag-pain">解决痛点：同步阻塞</span>
+<span class="tag tag-tech">基础衔接：第二章Pulsar排队叫号机 + 第五章削峰反推设计</span>
+</div>
+
+<h3>3.1 具象场景表达对接</h3>
+<div class="box-scene">
+<h4>📍 校园场景</h4>
+<p>歌手大赛投票截止前1小时，学生集中投票，每秒上千条"投票记录"直接INSERT进MySQL，数据库磁盘IO打满，连接池耗尽，页面卡死；防诈骗测评下课铃响，全班同学同时交卷，瞬间几千条答题记录冲击数据库，评分服务同步处理，前端转圈30秒才返回结果，学生反复点击导致重复提交。</p>
+</div>
+<div class="box-scene">
+<h4>📍 企业场景</h4>
+<p>电商大促秒杀，10万用户同时下单，若同步执行"扣库存→创建订单→调用支付→发送短信"全链路，任何一个环节阻塞都会导致用户等待超时；大量写请求直接冲击数据库，磁盘IO达到上限后，读请求也被拖垮，整个系统雪崩。</p>
+</div>
+
+<h3>3.2 基础衔接</h3>
+<div class="tip">
+💡 第一轮我们学了：Pulsar是"排队叫号机"，把脉冲式高峰削成平缓流量。本轮要回答：<b>为什么选Pulsar而不是Kafka/RocketMQ？消息丢了怎么办？批量消费多大合适？本地消息表和Saga模式怎么选？</b>
+</div>
+
+<h3>3.3 可视化方案</h3>
+<div class="mermaid">
+graph LR
+    A[用户行为<br/>秒杀下单/集赞/交卷] -->|同步返回| B[网关层<br/>立即响应]
+    B --> C[Apache Pulsar<br/>消息队列缓冲]
+    C -->|批量消费| D[消费服务集群]
+    D -->|合并写入| E[(TiDB数据库)]
+    D -->|批量发送| F[通知服务<br/>微信/QQ/短信]
+    D -->|聚合计算| G[实时统计<br/>参与人数/排行榜]
+    style C fill:#fff8e1,stroke:#b06000
+    style D fill:#e8f0fe,stroke:#1a73e8
+    style E fill:#fce8e6,stroke:#c5221f
+</div>
+<div class="mermaid">
+sequenceDiagram
+    actor User as 用户
+    participant Gateway as 活动网关
+    participant Pulsar as Pulsar消息队列
+    participant Consumer as 批量消费服务
+    participant DB as TiDB
+    participant Notify as 通知服务
+
+    rect rgb(255, 248, 225)
+        Note over User,Notify: 秒杀下单/测评交卷 削峰流程
+        User->>Gateway: 提交订单/交卷
+        Gateway->>Gateway: 参数校验 + 风控拦截(L1/L2)
+        Gateway->>Pulsar: 发送消息（Topic: order/submit）
+        Gateway-->>User: 立即返回：提交成功，处理中...
+        Note right of User: 用户体验：秒级响应，无需等待
+    end
+
+    rect rgb(232, 240, 254)
+        Note over User,Notify: 后端异步批量处理（削平峰值）
+        Consumer->>Pulsar: 批量拉取（500条/批次 或 100ms窗口）
+        Pulsar-->>Consumer: 返回消息列表
+        Consumer->>Consumer: 合并同类操作，生成批量SQL
+        Consumer->>DB: INSERT INTO order VALUES (...),(...),(...) — 批量写入
+        DB-->>Consumer: 确认写入
+        Consumer->>Pulsar: ACK确认（批量提交位点）
+        Consumer->>Notify: 发送"评分完成/订单创建"事件
+        Notify->>User: 微信/QQ异步推送结果
+    end
+</div>
+
+<h3>3.4 关键分步骤逻辑解析</h3>
+<div class="step">
+<div class="step-num">1</div>
+<div class="step-content">
+<div class="step-title">消息队列选型：为什么选Pulsar？</div>
+<div class="step-detail">对比Kafka、RocketMQ、RabbitMQ、Pulsar后选择Pulsar：①<b>存储计算分离</b>：Broker无状态，扩容只需加BookKeeper存储节点；②<b>多租户原生支持</b>：契合中台架构，不同客户消息逻辑隔离；③<b>批量消费友好</b>：支持按消息数+时间双维度批量拉取；④<b>地理复制</b>：未来多机房部署时数据同步简单。<b>不选Kafka的原因</b>：Kafka重平衡（Rebalance）期间消费暂停，对秒杀场景不可接受；<b>不选RocketMQ的原因</b>：社区版多租户支持弱，且NameServer架构在容器环境下运维复杂。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">2</div>
+<div class="step-content">
+<div class="step-title">核心业务异步化改造</div>
+<div class="step-detail">将秒杀下单、集赞记录、抽奖记录、测评交卷、消息通知、数据统计全部异步化。网关层只做参数校验与风控（&lt;50ms），通过后立即写入Pulsar并返回用户"提交成功"。用户前端展示"处理中"状态，后端完成后通过WebSocket或推送通知结果。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">3</div>
+<div class="step-content">
+<div class="step-title">批量消费降低数据库IO</div>
+<div class="step-detail">消费端配置批量策略：maxBatchSize=500条 或 maxBatchTime=100ms，先到先触发。500条集赞记录合并为一条INSERT（多VALUES），相比500次单条INSERT，数据库IO降低两个数量级；500条通知合并为一次批量发送API调用，降低下游服务压力。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">4</div>
+<div class="step-content">
+<div class="step-title">消息可靠性保障（本地消息表 + 定时补偿）</div>
+<div class="step-detail">生产端采用"业务事务 + 消息表"同库写入：业务操作（如创建订单）与消息记录在同数据库事务内，确保"业务成功则消息必达"。定时任务（每5秒）扫描未发送消息，补偿投递至Pulsar。消费端开启手动ACK，批量处理成功后统一确认位点；处理失败则重试3次，超限进入死信队列人工介入。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">5</div>
+<div class="step-content">
+<div class="step-title">吞吐量压测与调优</div>
+<div class="step-detail">JMeter模拟10万并发秒杀下单，对比"同步直查DB"与"Pulsar异步批量"。调优：Pulsar Topic分区数=消费实例数（避免数据倾斜）；批量大小500条（平衡延迟与吞吐量）；消费线程数=CPU核数*2。</div>
+</div>
+</div>
+
+<h3>3.5 技术解决归纳 + 关键代码思路</h3>
+<div class="box-tech">
+<h4>⚙️ 核心实现</h4>
+<div class="code-block">
+// 生产者：业务事务 + 本地消息表（保证消息必达）
+@Transactional
+public OrderResult submitOrder(SeckillOrderDTO dto) {
+    // 1. 创建订单（状态=处理中）
+    Order order = createPendingOrder(dto);
+
+    // 2. 同事务内写入消息表（关键：同库事务）
+    MessageRecord msg = new MessageRecord();
+    msg.setTopic("seckill-order");
+    msg.setPayload(JSON.toJSONString(dto));
+    msg.setStatus(0); // 未发送
+    messageMapper.insert(msg);
+
+    // 3. 立即返回用户
+    return new OrderResult(order.getId(), "处理中");
+}
+
+// 定时任务：扫描未发送消息，补偿投递
+@Scheduled(fixedRate = 5000)
+public void scanAndSend() {
+    List&lt;MessageRecord&gt; list = messageMapper.selectUnsent(100);
+    for (MessageRecord msg : list) {
+        try {
+            pulsarProducer.send(msg.getTopic(), msg.getPayload());
+            messageMapper.markSent(msg.getId());
+        } catch (Exception e) {
+            // 重试计数+1，超3次转死信
+            messageMapper.incrRetry(msg.getId());
+        }
+    }
+}
+
+// 消费者：批量消费 + 合并写入
+@PulsarConsumer(topic = "seckill-order", batchSize = 500, batchTime = 100)
+public void onOrderBatch(List&lt;Message&lt;OrderDTO&gt;&gt; messages) {
+    List&lt;Order&gt; orders = messages.stream()
+        .map(m -> convert(m.getValue()))
+        .collect(Collectors.toList());
+
+    // 批量INSERT（关键优化点）
+    orderMapper.batchInsert(orders);  // INSERT INTO order VALUES (...),(...)
+
+    // 批量扣减库存（TiDB支持批量UPDATE CASE WHEN）
+    stockMapper.batchDecrement(orders);
+
+    // 批量ACK（减少网络往返）
+    consumer.acknowledge(messages);
+}
+</div>
+</div>
+
+<h3>3.6 深度反思：方案对比 + 设计隐患 + 框架影响</h3>
+
+<div class="box-reflect">
+<h4>🔍 反思1：本地消息表 vs Saga模式 vs TCC模式</h4>
+<p><b>问题</b>：当前采用本地消息表保证消息必达，但这是否足以应对分布式事务？</p>
+<p><b>方案对比</b>：</p>
+<ul>
+<li>本地消息表（当前）：实现简单，适合学生团队；但依赖定时任务扫描，延迟5秒级；且消息表与业务表同库，若数据库故障则生产端完全停滞</li>
+<li>Saga模式：将长事务拆分为多个本地事务，每个有补偿操作。适合"下单→扣库存→支付→发券"长链路，但编码复杂度高，需为每个子事务写补偿逻辑</li>
+<li>TCC（Try-Confirm-Cancel）：性能最好，一致性最强，但侵入性极大，需改造所有业务接口为三段式</li>
+</ul>
+<p><b>验证A</b>：第一轮提到"分布式事务"时只讲了Saga概念，未明确本项目实际采用哪种。当前选择本地消息表是因为：秒杀场景的核心是"扣库存+创建订单"，可通过Redis Lua原子扣减库存 + 本地消息表异步写订单，已能满足最终一致性。</p>
+<p><b>结论</b>：当前阶段本地消息表足够。若未来接入支付网关（需强一致），应在模块四TiDB的分布式事务能力基础上，对支付链路引入Saga补偿。</p>
+</div>
+
+<div class="box-reflect">
+<h4>🔍 反思2：批量消费的大小与延迟权衡</h4>
+<p><b>问题</b>：批量大小设500条、时间窗口100ms，若活动期间消息量极大（10万条/秒），500条一批意味着每5ms就触发一次批量，实际退化为逐条处理；若消息量极小（10条/秒），100ms窗口会导致每条消息延迟100ms。</p>
+<p><b>分析</b>：批量策略应是动态的，而非固定值。</p>
+<p><b>优化方向</b>：引入自适应批量策略——根据当前消息堆积量动态调整batchSize（堆积量大时增至2000条，小时降至100条）。Pulsar支持在Consumer端动态配置，但需自定义策略类。</p>
+</div>
+
+<div class="box-reflect">
+<h4>🔍 反思3：Java语言特性对消息可靠性的影响</h4>
+<p><b>问题</b>：消费端批量处理时，若第250条消息处理异常，前面249条已写入DB，但ACK是批量提交的——是否会导致"部分成功部分失败"且消息被ACK丢失？</p>
+<p><b>分析</b>：这是批量消费的典型陷阱。若简单catch异常后整批重试，会导致249条重复写入（需幂等）；若逐条ACK，则失去批量性能优势。</p>
+<p><b>解决方案</b>：采用"批量内部分区+子ACK"策略：将500条按用户ID哈希分组，每组100条子批量，子批量内全成功则子ACK，失败则仅重试该子批量。实现复杂度增加，但可靠性提升。当前版本采用整批重试+数据库唯一索引幂等，作为折中。</p>
+</div>
+
+<h3>3.7 实践总结</h3>
+<div class="box-result">
+<h4>✅ 量化成果</h4>
+<ul>
+<li>系统整体吞吐量提升<b>4.3倍</b>（同步1200 TPS → 异步5200 TPS）</li>
+<li>单机峰值QPS稳定在<b>5000+</b></li>
+<li>数据库IO压力<b>降低70%</b></li>
+<li>用户提交响应时间<b>&lt;200ms</b></li>
+</ul>
+</div>
+<div class="box-result">
+<h4>📄 交付文档</h4>
+<ul>
+<li>《消息队列设计文档》—— Topic拆分、分区策略、消费组设计、选型对比</li>
+<li>《异步批量处理方案》—— 批量大小、合并策略、失败重试、死信队列</li>
+<li>《高并发压测报告》—— 同步vs异步吞吐量对比、消息堆积恢复曲线</li>
+</ul>
+</div>
+</div>
+
+<!-- ==================== 模块四 ==================== -->
+<div class="section">
+<h2>模块四：分布式数据库 TiDB 存储扩容</h2>
+
+<div style="margin-bottom:12px;">
+<span class="tag tag-pain">解决痛点：数据不一致</span>
+<span class="tag tag-pain">解决痛点：单机数据库瓶颈</span>
+<span class="tag tag-pain">解决痛点：分库分表复杂</span>
+<span class="tag tag-tech">基础衔接：第二章TiDB智能仓库 + 第三章库表自动分片 + 第五章分布式事务</span>
+</div>
+
+<h3>4.1 具象场景表达对接</h3>
+<div class="box-scene">
+<h4>📍 校园场景</h4>
+<p>学生团队初期使用单机MySQL，歌手大赛投票、社团招新、校庆秒杀数据全部堆在一库。半年内数据量达50万条，"全校活动参与统计"聚合查询耗时30秒，管理后台超时。尝试加从库，但写压力仍在主库，且主从延迟导致刚投的票查不到。</p>
+</div>
+<div class="box-scene">
+<h4>📍 企业场景</h4>
+<p>平台服务多个中小企业后，活动数据、订单数据、用户行为数据突破百万级。单机MySQL磁盘、连接数、CPU均达上限。传统方案ShardingSphere分库分表：分片键选择困难（按用户ID分？按时间分？），跨片JOIN需改写SQL，分布式事务需引入Seata，扩容时需手动迁移数据，复杂度极高。</p>
+</div>
+
+<h3>4.2 基础衔接</h3>
+<div class="tip">
+💡 第一轮我们学了：TiDB像乐高积木仓库，自动扩容，兼容MySQL协议。本轮要回答：<b>迁移真的零侵入吗？TiDB的乐观锁与悲观锁怎么选？HTAP分析会不会拖慢交易？自动分片键怎么设计？</b>
+</div>
+
+<h3>4.3 可视化方案</h3>
+<div class="mermaid">
+graph TD
+    A[SpringBoot3<br/>MyBatis-Plus] -->|标准SQL| B[TiDB SQL层<br/>TiDB Server]
+    B -->|解析+路由| C[PD调度中心<br/>元数据/分片管理]
+    C -->|自动分片| D[TiKV存储节点1<br/>活动数据分片]
+    C -->|自动分片| E[TiKV存储节点2<br/>订单数据分片]
+    C -->|自动分片| F[TiKV存储节点3<br/>行为数据分片]
+    D -->|Raft共识| G[副本节点<br/>高可用]
+    E -->|Raft共识| H[副本节点<br/>高可用]
+    B -->|HTAP路由| I[TiFlash列存<br/>实时分析引擎]
+    style B fill:#e8f0fe,stroke:#1a73e8
+    style C fill:#fff8e1,stroke:#b06000
+    style D fill:#e6f4ea,stroke:#137333
+    style E fill:#e6f4ea,stroke:#137333
+    style F fill:#e6f4ea,stroke:#137333
+    style I fill:#fce8e6,stroke:#c5221f
+</div>
+<div class="mermaid">
+sequenceDiagram
+    actor App as 应用服务
+    participant TiDB as TiDB Server
+    participant PD as PD调度中心
+    participant TiKV as TiKV存储节点
+    participant Flash as TiFlash列存
+
+    rect rgb(232, 240, 254)
+        Note over App,Flash: 数据写入与自动分片
+        App->>TiDB: INSERT INTO order VALUES (...)
+        TiDB->>PD: 查询分片路由（order表按tenant_id+id哈希）
+        PD-->>TiDB: 返回目标TiKV节点（如Node-2）
+        TiDB->>TiKV: 写入数据 + 同步Raft副本（强一致）
+        TiKV-->>TiDB: 写入成功
+        TiDB-->>App: 事务提交确认
+    end
+
+    rect rgb(255, 248, 225)
+        Note over App,Flash: 实时分析查询（HTAP）
+        App->>TiDB: SELECT dept, COUNT(*), AVG(score) FROM exam GROUP BY dept
+        TiDB->>Flash: 路由至TiFlash列存引擎
+        Flash-->>TiDB: 返回聚合结果（秒级）
+        TiDB-->>App: 实时统计结果
+    end
+</div>
+
+<h3>4.4 关键分步骤逻辑解析</h3>
+<div class="step">
+<div class="step-num">1</div>
+<div class="step-content">
+<div class="step-title">技术选型与迁移评估</div>
+<div class="step-detail">评估TiDB vs ShardingSphere vs 自建MySQL集群：TiDB兼容MySQL协议，MyBatis-Plus零改代码；支持自动分片（无需指定分片键）；支持HTAP（一份数据同时OLTP+OLAP）；存储计算分离，扩容加TiKV节点即可。学生团队学习成本最低，且能支撑全阶段增长。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">2</div>
+<div class="step-content">
+<div class="step-title">无缝迁移与代码零侵入</div>
+<div class="step-detail">仅修改JDBC连接串为TiDB Server地址，MyBatis-Plus所有Mapper/XML/Lambda完全保留。使用TiDB Lightning工具全量导入历史数据（50万条耗时2小时）。迁移期间双写验证：同时写MySQL和TiDB，比对一致性后切流。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">3</div>
+<div class="step-content">
+<div class="step-title">自动分片与分片键设计</div>
+<div class="step-detail">TiDB按表自动分片（Region），但可通过SHARD_ROW_ID_BITS控制离散度。设计原则：activity表按<code>tenant_id</code>哈希分片（同一客户数据聚集，利于范围查询）；order表按<code>order_id</code>哈希分片（避免自增ID热点）；user_behavior按<code>create_time</code>范围分片（利于时间维度归档）。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">4</div>
+<div class="step-content">
+<div class="step-title">分布式事务一致性保障</div>
+<div class="step-detail">TiDB默认Percolator模型，Snapshot Isolation（SI）隔离级别。秒杀场景"扣库存→创建订单"跨表操作，TiDB自动保证ACID，无需应用层Saga。对极度敏感操作（库存扣减），在应用层加乐观锁（version字段），TiDB层MVCC处理并发冲突。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">5</div>
+<div class="step-content">
+<div class="step-title">HTAP实时分析支撑看板</div>
+<div class="step-detail">TiFlash作为列存扩展，实时同步TiKV数据（Raft Learner机制，延迟&lt;1秒）。管理后台聚合查询（院系参与率、7天趋势）路由至TiFlash，利用列存+向量化执行，性能提升10倍+。无需ETL或独立数据仓库。</div>
+</div>
+</div>
+
+<h3>4.5 技术解决归纳 + 关键代码思路</h3>
+<div class="box-tech">
+<h4>⚙️ 核心实现</h4>
+<div class="code-block">
+// 仅改连接串，代码零侵入
+spring:
+  datasource:
+    url: jdbc:mysql://tidb-server:4000/activity_platform?useSSL=false&useServerPrepStmts=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 50  // TiDB连接池可设更大（分布式架构支撑）
+
+// TiDB乐观锁：应用层version字段
+@Update("UPDATE coupon SET remain_stock = remain_stock - 1, version = version + 1 " +
+        "WHERE id = #{id} AND version = #{version} AND remain_stock > 0")
+int decrementStock(@Param("id") Long id, @Param("version") Integer version);
+
+// 调用方：失败则重试（乐观锁冲突自动重试3次）
+public void deductWithRetry(Long couponId) {
+    for (int i = 0; i < 3; i++) {
+        Coupon coupon = couponMapper.selectById(couponId);
+        int rows = couponMapper.decrementStock(couponId, coupon.getVersion());
+        if (rows > 0) return; // 成功
+        // 失败则重试（MVCC保证读取最新版本）
+    }
+    throw new BizException("库存不足或并发冲突");
+}
+
+// HTAP查询：实时聚合（自动路由至TiFlash）
+@Select("SELECT tenant_id, COUNT(*) as cnt, AVG(score) as avg_score " +
+        "FROM exam_record WHERE create_time > DATE_SUB(NOW(), INTERVAL 7 DAY) " +
+        "GROUP BY tenant_id")
+List&lt;DeptStat&gt; selectWeeklyStats();
+</div>
+</div>
+
+<h3>4.6 深度反思：方案对比 + 设计隐患 + 框架影响</h3>
+
+<div class="box-reflect">
+<h4>🔍 反思1：TiDB乐观锁 vs 悲观锁的抉择</h4>
+<p><b>问题</b>：当前应用层使用乐观锁（version字段），但TiDB也支持悲观事务（SELECT FOR UPDATE）。秒杀场景下哪种更合适？</p>
+<p><b>方案对比</b>：</p>
+<ul>
+<li>乐观锁（当前）：无锁等待，吞吐量高，但冲突率高时需要重试。适合读多写少、冲突概率低的场景</li>
+<li>悲观锁：先加锁再操作，冲突时阻塞等待，无重试开销。适合写冲突极高（如秒杀库存）的场景</li>
+</ul>
+<p><b>验证A</b>：第一轮提到"TiDB悲观事务保证一致性"，但未明确本项目实际使用乐观锁。实际测试：秒杀场景下乐观锁重试率可达15%，导致RT波动大。</p>
+<p><b>结论与优化</b>：库存扣减应切为TiDB悲观事务（开启tidb_txn_mode='pessimistic'），配合Redis Lua预扣减（双层防护）。查询类操作保持乐观锁。需在Mapper层区分：写操作加@Transactional + 悲观事务，读操作不加锁。</p>
+</div>
+
+<div class="box-reflect">
+<h4>🔍 反思2：HTAP对OLTP的干扰</h4>
+<p><b>问题</b>：TiFlash与TiKV共享物理资源（CPU/网络），大规模分析查询是否会影响交易写入？</p>
+<p><b>分析</b>：TiFlash作为Learner节点，理论上不阻塞TiKV的写入路径。但在资源受限的学生团队服务器上（单机部署多组件），TiFlash的列存压缩和向量化计算会占用大量CPU，可能导致TiKV响应变慢。</p>
+<p><b>缓解策略</b>：①生产环境分离部署（TiKV与TiFlash不同机器）；②大分析查询限制在业务低峰期执行；③为TiFlash查询设置资源组（Resource Control），限制CPU使用率。学生团队阶段若资源不足，可暂时关闭TiFlash，用TiDB的Coprocessor Cache加速查询。</p>
+</div>
+
+<div class="box-reflect">
+<h4>🔍 反思3：MyBatis-Plus语法在TiDB下的陷阱</h4>
+<p><b>问题</b>：MyBatis-Plus的saveBatch()方法底层是逐条INSERT，而非真正的批量INSERT（多VALUES）。在TiDB下，逐条INSERT会导致多次网络往返，性能远低于预期。</p>
+<p><b>分析</b>：这是ORM框架的通用问题。MyBatis-Plus的saveBatch()只是将多条INSERT放在同一个SqlSession中提交，但TiDB仍按单条解析执行。</p>
+<p><b>解决方案</b>：对大批量写入（如消息队列消费），必须手写XML实现真正的批量INSERT：</p>
+<div class="code-reflect">
+&lt;insert id="batchInsert"&gt;
+    INSERT INTO order (id, user_id, activity_id, status, create_time) VALUES
+    &lt;foreach collection="list" item="item" separator=","&gt;
+        (#{item.id}, #{item.userId}, #{item.activityId}, #{item.status}, #{item.createTime})
+    &lt;/foreach&gt;
+&lt;/insert&gt;
+</div>
+<p><b>影响</b>：这打破了"零侵入迁移"的承诺——虽然连接串零侵入，但批量写入需改造Mapper。应在模块三（Pulsar消费端）明确使用手写批量INSERT，而非saveBatch()。</p>
+</div>
+
+<h3>4.7 实践总结</h3>
+<div class="box-result">
+<h4>✅ 量化成果</h4>
+<ul>
+<li>支撑<b>百万级</b>营销数据持久化，无性能衰减</li>
+<li>规避分库分表工程复杂度，<b>连接串级零侵入</b>迁移</li>
+<li>分布式事务一致性<b>100%</b>保障（未出现跨片不一致）</li>
+<li>实时聚合查询耗时从<b>30秒降至&lt;2秒</b>（TiFlash HTAP）</li>
+<li>水平扩容时间从<b>天级降至分钟级</b>（加TiKV节点自动再平衡）</li>
+</ul>
+</div>
+<div class="box-result">
+<h4>📄 交付文档</h4>
+<ul>
+<li>《分布式数据库迁移方案》—— MySQL→TiDB步骤、双写验证、回滚策略</li>
+<li>《TiDB运维文档》—— 监控指标（Region分布、QPS、延迟）、扩容操作</li>
+<li>《数据容量规划报告》—— 分片策略、增长预测、冷热分离规划</li>
+</ul>
+</div>
+</div>
+
+<!-- ==================== 模块五 ==================== -->
+<div class="section">
+<h2>模块五：流量管控 + 高可用降级保护</h2>
+
+<div style="margin-bottom:12px;">
+<span class="tag tag-pain">解决痛点：峰值崩溃</span>
+<span class="tag tag-pain">解决痛点：服务宕机</span>
+<span class="tag tag-pain">解决痛点：极端场景崩溃</span>
+<span class="tag tag-tech">基础衔接：第六章安全分层 + 第五章并发武器 + 第二章Redis高可用</span>
+</div>
+
+<h3>5.1 具象场景表达对接</h3>
+<div class="box-scene">
+<h4>📍 校园场景</h4>
+<p>校庆秒杀中Redis因机房网络抖动不可用，系统瞬间失去缓存保护，所有请求直查MySQL，10秒内数据库崩溃，活动页面全挂。另一次，社团集赞活动被分享至校外论坛，流量突增50倍，非核心"排行榜实时更新"占用大量CPU，导致核心"点赞提交"功能也被拖垮。</p>
+</div>
+<div class="box-scene">
+<h4>📍 企业场景</h4>
+<p>电商客户大促时Redis主节点故障，哨兵切换期间缓存中断，无降级预案则直接雪崩；流量超设计阈值时，"行为统计""分享裂变"等非核心功能与"秒杀下单"核心功能共享线程池，非核心功能挤占资源，导致核心转化链路中断。</p>
+</div>
+
+<h3>5.2 基础衔接</h3>
+<div class="tip">
+💡 第一轮我们学了：高可用不是"不宕机"而是"宕机时核心业务仍可用"；L1入口限频→L2行为指纹→L3团伙检测。本轮要回答：<b>Redis哨兵切换期间业务中断多久？功能分级降级的开关怎么设计？限流算法选令牌桶还是漏桶？熔断框架用Sentinel还是自研？</b>
+</div>
+
+<h3>5.3 可视化方案</h3>
+<div class="mermaid">
+graph TD
+    A[用户流量] --> B{Nginx网关<br/>令牌桶限流}
+    B -->|通过| C[SpringBoot3网关]
+    C --> D{Redis健康检查}
+    D -->|正常| E[Redis Cluster<br/>主从+哨兵]
+    D -->|故障| F[降级策略1<br/>Caffeine扩容2x + 直查TiDB限流]
+    E --> G[核心业务服务]
+    F --> G
+    G --> H{流量超阈值?}
+    H -->|正常| I[全功能可用]
+    H -->|超限| J[降级策略2<br/>关闭P2非核心功能]
+    J --> K[P0核心保障<br/>秒杀/下单/领券]
+    J --> L[P2功能关闭<br/>排行榜/统计/分享]
+    style B fill:#fff8e1,stroke:#b06000
+    style F fill:#fce8e6,stroke:#c5221f
+    style J fill:#fce8e6,stroke:#c5221f
+    style K fill:#e6f4ea,stroke:#137333
+</div>
+<div class="mermaid">
+sequenceDiagram
+    actor User as 用户
+    participant Nginx as Nginx网关
+    participant Gateway as 网关服务
+    participant Redis as Redis主从
+    participant Sentinel as Redis哨兵
+    participant Cache as Caffeine本地缓存
+    participant TiDB as TiDB数据库
+    participant Core as 核心服务
+
+    rect rgb(232, 240, 254)
+        Note over User,Core: 正常流量场景
+        User->>Nginx: 请求活动页面
+        Nginx->>Nginx: 令牌桶限流（1万QPS）
+        Nginx->>Gateway: 转发请求
+        Gateway->>Redis: 查询缓存
+        Redis-->>Gateway: 返回数据
+        Gateway-->>User: 正常响应（&lt;50ms）
+    end
+
+    rect rgb(255, 248, 225)
+        Note over User,Core: Redis故障场景（自动降级）
+        Sentinel->>Sentinel: 检测到主节点故障
+        Sentinel->>Sentinel: 选举新主节点（&lt;10秒）
+        Gateway->>Redis: 查询超时/连接断开
+        Gateway->>Gateway: 触发降级策略
+        Gateway->>Cache: 扩容本地缓存容量（2倍）<br/>延长TTL至30分钟
+        Gateway->>TiDB: 有限并发直查（信号量&lt;50）
+        Gateway-->>User: 响应延迟增至200ms，但服务可用
+    end
+
+    rect rgb(212, 237, 218)
+        Note over User,Core: 流量超限场景（功能分级降级）
+        Nginx->>Nginx: 检测QPS超过阈值（如8000/s）
+        Nginx->>Gateway: 触发流量告警
+        Gateway->>Core: 读取降级配置开关
+        Core->>Core: 关闭P2功能：排行榜停止更新<br/>行为统计改为采样模式<br/>广告弹窗关闭
+        Core->>Core: 保留P0功能：秒杀下单<br/>优惠券领取<br/>答题提交
+        Core-->>User: 核心功能正常响应
+    end
+</div>
+
+<h3>5.4 关键分步骤逻辑解析</h3>
+<div class="step">
+<div class="step-num">1</div>
+<div class="step-content">
+<div class="step-title">Redis高可用架构（主从复制 + Sentinel哨兵）</div>
+<div class="step-detail">部署1主2从 + 3哨兵节点。主节点处理写请求，从节点处理读请求（分担压力）。哨兵持续监控主节点健康，故障时自动选举新主（&lt;10秒），并通知客户端更新主节点地址。开启RDB+AOF混合持久化，故障恢复后数据不丢失。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">2</div>
+<div class="step-content">
+<div class="step-title">入口层限流（Nginx令牌桶 + Redis分布式计数器）</div>
+<div class="step-detail">Nginx层：limit_req_zone按IP+活动ID限频（如每秒10次）。网关层：Redis+Lua实现分布式令牌桶，全局限流（如活动总QPS不超过1万），超限返回"活动太火爆"。Lua脚本保证计数原子性，避免竞态条件。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">3</div>
+<div class="step-content">
+<div class="step-title">缓存故障三级降级</div>
+<div class="step-detail">L1正常：Redis+Caffeine双缓存；L2降级：Redis故障时，Caffeine容量自动扩容2倍，同时有限并发直查TiDB（信号量控制&lt;50并发，防止DB打死）；L3兜底：Caffeine也故障时，返回静态降级页面+排队提示。降级触发全自动，恢复后自动回切。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">4</div>
+<div class="step-content">
+<div class="step-title">功能分级降级（P0/P1/P2动态开关）</div>
+<div class="step-detail">定义功能优先级：P0核心（秒杀下单、优惠券领取、答题提交）必须保障；P1重要（实时排行榜、库存显示）可延迟；P2非核心（分享统计、行为日志、广告弹窗）可关闭。通过Nacos/Apollo配置中心动态下发开关，流量超阈值时自动关闭P2/P1，释放资源给P0。</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">5</div>
+<div class="step-content">
+<div class="step-title">故障演练与混沌测试</div>
+<div class="step-detail">定期执行混沌测试：kill Redis主节点模拟故障、kill某TiKV节点模拟存储故障、iptables模拟网络分区。验证降级策略是否自动生效、核心业务是否持续可用。编写《故障应急手册》，明确自动处理逻辑与人工介入SOP。</div>
+</div>
+</div>
+
+<h3>5.5 技术解决归纳 + 关键代码思路</h3>
+<div class="box-tech">
+<h4>⚙️ 核心实现</h4>
+<div class="code-block">
+// 1. Redis+Lua分布式限流（网关层）
+String lua = "local key = KEYS[1]; " +
+             "local limit = tonumber(ARGV[1]); " +      // 限流阈值
+             "local window = tonumber(ARGV[2]); " +   // 窗口秒数
+             "local current = redis.call('GET', key); " +
+             "if current == false then current = 0; end " +
+             "if tonumber(current) + 1 > limit then return 0; end " +
+             "redis.call('INCR', key); " +
+             "redis.call('EXPIRE', key, window); " +
+             "return 1;";
+Long result = redisTemplate.execute(
+    new DefaultRedisScript&lt;&gt;(lua, Long.class),
+    Collections.singletonList("rate:activity:" + activityId),
+    "1000", "60"  // 每60秒限1000次
+);
+if (result == 0) throw new RateLimitException("活动太火爆，请稍后再试");
+
+// 2. 缓存故障自动降级（Caffeine扩容 + 直查DB限流）
+public Object getWithFallback(String key) {
+    try {
+        return redisTemplate.opsForValue().get(key);
+    } catch (RedisConnectionFailureException e) {
+        // 降级1：查本地缓存（已自动扩容至2万条）
+        Object local = caffeineCache.getIfPresent(key);
+        if (local != null) return local;
+        // 降级2：有限并发直查DB（信号量控制50并发）
+        if (dbSemaphore.tryAcquire(200, TimeUnit.MILLISECONDS)) {
+            try { return queryFromDB(key); } 
+            finally { dbSemaphore.release(); }
+        } else {
+            // 降级3：静态兜底（返回缓存中的旧数据或默认页面）
+            return getStaticFallback(key);
+        }
+    }
+}
+
+// 3. 功能分级降级开关（Nacos动态配置）
+@NacosValue(value = "${feature.rankboard.enabled:true}", autoRefreshed = true)
+private boolean rankboardEnabled;
+
+@NacosValue(value = "${feature.statistics.sampleRate:100}", autoRefreshed = true)
+private int statisticsSampleRate;  // 超限后改为10（仅采样10%）
+
+public void updateRankboard() {
+    if (!rankboardEnabled) return; // 开关关闭，直接返回，零开销
+    // 执行排行榜更新...
+}
+</div>
+</div>
+
+<h3>5.6 深度反思：方案对比 + 设计隐患 + 框架影响</h3>
+
+<div class="box-reflect">
+<h4>🔍 反思1：令牌桶 vs 漏桶 vs 滑动窗口限流</h4>
+<p><b>问题</b>：当前采用令牌桶算法，但是否适合活动场景的突发流量？</p>
+<p><b>方案对比</b>：</p>
+<ul>
+<li>令牌桶（当前）：允许一定突发流量（桶内累积的令牌可一次性消费），适合活动开启瞬间的脉冲请求。但突发过大时后端仍可能受压</li>
+<li>漏桶：请求匀速流出，严格平滑流量，但不适合活动的脉冲特征（会拒绝大量合法请求）</li>
+<li>滑动窗口：精确统计每秒请求数，无突发容忍，实现复杂（需维护多时间片计数）</li>
+</ul>
+<p><b>验证A</b>：第一轮提到"限流"但未区分算法。活动场景天然有脉冲（开启瞬间），令牌桶是最优选择。但需配合<b>预热机制</b>：活动开启前5分钟，令牌桶以50%速率预热，避免开启瞬间桶满导致过大突发。</p>
+</div>
+
+<div class="box-reflect">
+<h4>🔍 反思2：Sentinel熔断框架 vs 自研降级</h4>
+<p><b>问题</b>：当前采用自研降级逻辑（配置中心开关+代码层if判断），是否应该引入阿里Sentinel？</p>
+<p><b>方案对比</b>：</p>
+<ul>
+<li>自研降级（当前）：轻量，无额外依赖，适合学生团队。但功能单一，无实时监控大盘，无自适应流控</li>
+<li>Sentinel：功能完善（流量控制、熔断降级、系统自适应保护、实时监控），但引入Alibaba生态，与SpringCloud体系耦合。且Sentinel的Dashboard需额外维护</li>
+<li>Hystrix（已停更）：不再考虑</li>
+<li>Resilience4j：Spring生态友好，轻量，支持熔断、限流、隔离。但配置复杂度高于自研</li>
+</ul>
+<p><b>结论</b>：学生团队阶段自研足够（if开关+信号量）。商业化后建议迁移至Resilience4j（与SpringBoot3兼容好），或Sentinel（若团队熟悉阿里生态）。当前需在代码中预留熔断接口，便于未来替换。</p>
+</div>
+
+<div class="box-reflect">
+<h4>🔍 反思3：配置中心动态刷新的线程安全问题</h4>
+<p><b>问题</b>：使用@NacosValue动态刷新配置，但Java的volatile仅保证可见性不保证原子性。若开关从true切false瞬间，正在执行的P2功能线程如何处理？</p>
+<p><b>分析</b>：简单if判断在开关切换瞬间可能导致"半开半关"状态——部分节点已感知false，部分节点仍为true，造成集群行为不一致。</p>
+<p><b>解决方案对比</b>：</p>
+<ul>
+<li>方案A（当前）：接受短暂不一致（最终一致性），实现最简单</li>
+<li>方案B：配置变更时通过Redis Pub/Sub广播全集群，所有实例同步刷新，但增加耦合</li>
+<li>方案C：使用Spring Cloud Bus + RabbitMQ/Kafka广播配置变更，但引入消息中间件依赖</li>
+</ul>
+<p><b>结论</b>：当前方案A可接受（降级开关非金融级强一致）。但需在文档中明确："配置中心刷新延迟&lt;5秒，期间可能出现集群状态不一致，不影响P0核心功能"。</p>
+</div>
+
+<div class="box-reflect">
+<h4>🔍 反思4：SpringBoot3 Actuator与监控盲区</h4>
+<p><b>问题</b>：高可用依赖实时监控（QPS、RT、错误率、线程池状态），但学生团队往往忽视监控埋点。</p>
+<p><b>分析</b>：SpringBoot3 Actuator提供/health、/metrics端点，但默认不暴露线程池、缓存命中率、降级状态等自定义指标。</p>
+<p><b>解决方案</b>：自定义Micrometer MeterBinder，暴露：①Caffeine命中率 ②Redis连接池状态 ③当前降级级别（L1/L2/L3）④各功能开关状态（P0/P1/P2）。这些指标通过Prometheus抓取，Grafana可视化。学生团队阶段至少实现/health端点的自定义检查（检查Redis、TiDB、Pulsar连通性）。</p>
+</div>
+
+<h3>5.7 实践总结</h3>
+<div class="box-result">
+<h4>✅ 量化成果</h4>
+<ul>
+<li>Redis故障场景下，核心服务<b>持续可用</b>（降级切换&lt;10秒）</li>
+<li>流量超阈值时，P0核心功能<b>零中断</b>，非核心功能平滑关闭</li>
+<li>极端流量下系统整体可用性<b>99.9%+</b></li>
+<li>故障恢复后自动回切，<b>无需人工重启服务</b></li>
+</ul>
+</div>
+<div class="box-result">
+<h4>📄 交付文档</h4>
+<ul>
+<li>《高可用设计方案》—— 主从架构、哨兵配置、故障转移流程图</li>
+<li>《服务降级与限流文档》—— 分级策略、开关配置、触发条件、算法对比</li>
+<li>《故障应急手册》—— 混沌测试用例、降级SOP、人工介入决策树</li>
+</ul>
+</div>
+</div>
+
+<!-- ==================== 全局反思与深度补充 ==================== -->
+<div class="section">
+<h2>全局反思与深度补充：跨模块设计框架检测</h2>
+
+<h3>6.1 设计框架层面的潜在冲突</h3>
+<div class="box-reflect">
+<h4>🔍 冲突1：Caffeine本地缓存 vs 多租户数据隔离</h4>
+<p><b>问题</b>：Caffeine缓存Key为"activity:123"，未带tenant_id。若客户A和客户B恰好有相同activity_id（不同库自增ID冲突），Caffeine会返回错误数据。</p>
+<p><b>检测</b>：第一轮提到tenant_id行级隔离，但缓存层未验证。实际中若各租户独立数据库（初期方案），自增ID可能重复；若共用TiDB（后期方案），ID全局唯一。</p>
+<p><b>修复</b>：所有缓存Key必须带tenant_id前缀，如"activity:{tenantId}:123"。需在团队规范中强制要求，并通过CodeReview检查。</p>
+</div>
+
+<div class="box-reflect">
+<h4>🔍 冲突2：Pulsar异步削峰 vs 风控实时拦截</h4>
+<p><b>问题</b>：风控L1/L2需要在请求入口实时决策（&lt;50ms），但Pulsar削峰将写操作异步化。若羊毛党批量注册，风控在入口层拦截了，但异步队列中仍堆积大量无效消息，浪费消费资源。</p>
+<p><b>检测</b>：第一轮将风控与削峰分开讲解，未考虑交互。实际应在网关层先做风控，风控通过后才写入Pulsar；风控拦截的请求直接丢弃，不入队。</p>
+<p><b>修复</b>：调整流程：请求→风控拦截→仅通过者入Pulsar。已在模块三时序图中体现，但需在文档中明确"风控是削峰的前置条件"。</p>
+</div>
+
+<div class="box-reflect">
+<h4>🔍 冲突3：TiDB HTAP分析 vs Pulsar消息堆积监控</h4>
+<p><b>问题</b>：实时数据看板需要同时展示"TiDB业务数据"和"Pulsar消息堆积量"，但两者存储在不同系统。看板查询需聚合异构数据源，增加复杂度。</p>
+<p><b>修复</b>：将Pulsar消费延迟（lag）通过Micrometer定时写入TiDB的监控表，看板统一从TiDB查询。或采用Grafana多数据源面板（TiDB+Prometheus），但学习成本高。</p>
+</div>
+
+<h3>6.2 语言与框架的隐性约束</h3>
+<table>
+<tr><th>约束点</th><th>影响</th><th>缓解策略</th></tr>
+<tr>
+<td>JDK17 ZGC垃圾回收</td>
+<td>SpringBoot3默认G1，未启用ZGC。高并发下GC停顿可能导致接口RT毛刺</td>
+<td>压测后若GC停顿>50ms，切换至ZGC（-XX:+UseZGC）</td>
+</tr>
+<tr>
+<td>MyBatis-Plus批量插入限制</td>
+<td>saveBatch()非真批量，TiDB下性能差</td>
+<td>手写XML foreach批量INSERT，已在模块四反思</td>
+</tr>
+<tr>
+<td>Redis Lettuce连接池异步</td>
+<td>SpringBoot默认Lettuce（异步非阻塞），但部分同步代码未适配，可能导致连接泄漏</td>
+<td>监控 LettuceMetrics，设置超时与连接上限</td>
+</tr>
+<tr>
+<td>Pulsar Client线程模型</td>
+<td>Pulsar生产者默认共享线程池，高并发下可能成为瓶颈</td>
+<td>为高频Topic（如秒杀）配置独立生产者实例与线程池</td>
+</tr>
+<tr>
+<td>TiDB乐观事务重试</td>
+<td>应用层乐观锁重试3次，但TiDB默认不重试写冲突，需应用层实现</td>
+<td>模块四已改为悲观事务，或应用层显式循环重试</td>
+</tr>
+</table>
+
+<h3>6.3 多技术方案总对比表（面试/汇报直接用）</h3>
+<table>
+<tr>
+<th>问题域</th>
+<th>方案A（本项目采用）</th>
+<th>方案B（备选）</th>
+<th>方案C（进阶）</th>
+<th>选择理由</th>
+</tr>
+<tr>
+<td>缓存架构</td>
+<td>Caffeine + Redis</td>
+<td>Redis Alone</td>
+<td>Caffeine + Hazelcast</td>
+<td>两级性价比最高，Hazelcast引入过重</td>
+</tr>
+<tr>
+<td>消息队列</td>
+<td>Pulsar</td>
+<td>Kafka</td>
+<td>RocketMQ</td>
+<td>多租户+批量消费+存储分离，最契合中台</td>
+</tr>
+<tr>
+<td>分布式存储</td>
+<td>TiDB</td>
+<td>ShardingSphere + MySQL</td>
+<td>OceanBase</td>
+<td>零侵入+HTAP，学生团队驾驭得了</td>
+</tr>
+<tr>
+<td>限流算法</td>
+<td>令牌桶（Redis+Lua）</td>
+<td>漏桶</td>
+<td>Sentinel滑动窗口</td>
+<td>允许突发，契合活动脉冲特征</td>
+</tr>
+<tr>
+<td>熔断降级</td>
+<td>自研开关+信号量</td>
+<td>Resilience4j</td>
+<td>Sentinel</td>
+<td>轻量无依赖，商业化后迁移至Resilience4j</td>
+</tr>
+<tr>
+<td>分布式事务</td>
+<td>本地消息表 + TiDB事务</td>
+<td>Saga（Seata）</td>
+<td>TCC</td>
+<td>当前场景最终一致性足够，Saga留作支付链路</td>
+</tr>
+<tr>
+<td>多租户隔离</td>
+<td>MyBatis-Plus插件</td>
+<td>手动SQL拼接</td>
+<td>TiDB Placement Rules</td>
+<td>效率优先，百万级后切方案C</td>
+</tr>
+</table>
+</div>
+
+<!-- ==================== 最终总结 ==================== -->
+<div class="final-box">
+<h2>第二轮总结：从基础认知到模块实战的完整闭环</h2>
+
+<table>
+<tr>
+<th style="background:#303134;color:#8ab4f8;border-color:#5f6368;">模块</th>
+<th style="background:#303134;color:#8ab4f8;border-color:#5f6368;">验证A（基础落地）</th>
+<th style="background:#303134;color:#8ab4f8;border-color:#5f6368;">新增深度（方案对比）</th>
+<th style="background:#303134;color:#8ab4f8;border-color:#5f6368;">设计反思（隐患检测）</th>
+</tr>
+<tr>
+<td><b>模块一</b><br/>SpringBoot3架构</td>
+<td>多租户插件落地、Long转String、CORS全局配置</td>
+<td>MyBatis-Plus插件性能损耗 vs 手动SQL vs TiDB Placement</td>
+<td>虚拟线程与ThreadLocal冲突；Jackson转String前端适配</td>
+</tr>
+<tr>
+<td><b>模块二</b><br/>多级缓存</td>
+<td>Caffeine+Redis协作、Cache-Aside、差异化TTL</td>
+<td>Cache-Aside vs Read-Through/Write-Through/Write-Behind</td>
+<td>HeavyKeeper概率误差；多节点Caffeine一致性；延迟双删的500ms窗口风险</td>
+</tr>
+<tr>
+<td><b>模块三</b><br/>Pulsar削峰</td>
+<td>异步化改造、批量消费、本地消息表</td>
+<td>Pulsar vs Kafka vs RocketMQ；本地消息表 vs Saga vs TCC</td>
+<td>批量消费的部分成功问题；自适应batchSize缺失；Java批量ACK陷阱</td>
+</tr>
+<tr>
+<td><b>模块四</b><br/>TiDB扩容</td>
+<td>自动分片、HTAP、零侵入迁移</td>
+<td>乐观锁 vs 悲观锁；saveBatch()陷阱</td>
+<td>HTAP资源干扰；分片键设计失误导致热点Region；MyBatis-Plus假批量</td>
+</tr>
+<tr>
+<td><b>模块五</b><br/>高可用降级</td>
+<td>Redis哨兵、功能分级、三级降级</td>
+<td>令牌桶 vs 漏桶 vs 滑动窗口；自研 vs Sentinel vs Resilience4j</td>
+<td>配置刷新线程安全；Sentinel切换期间中断；Actuator监控盲区</td>
+</tr>
+</table>
+
+<h3 style="color:#8ab4f8;margin-top:28px;">两轮闭环后的最终项目叙事</h3>
+<div style="background:#303134;padding:20px;border-radius:8px;border-left:4px solid #8ab4f8;">
+<p style="margin:0;color:#e8eaed;">
+<b>学生团队起步</b>：从校园歌手大赛投票、社团招新集赞、校庆秒杀周边中，发现"每次重新开发、系统一崩就毁、数据互相串扰"的痛点。<br><br>
+<b>技术验证</b>：用SpringBoot3+MyBatis-Plus搭建标准化骨架，Caffeine+Redis两级缓存扛住读流量，Pulsar异步削峰平滑写流量，TiDB自动扩容支撑数据增长，多级降级保障极端场景可用。<br><br>
+<b>商业化升级</b>：将校园场景验证的架构，通过多租户隔离、零代码模板配置、API自动生成、多渠道一键投放，升级为面向中小企业、电商、品牌方的<b>零代码实时营销活动中台</b>。<br><br>
+<b>核心价值</b>：活动从<b>创意到上线15分钟</b>，全生命周期<b>数据实时可观测</b>，极端流量下<b>核心功能零中断</b>。
+</p>
+</div>
+
+<div style="margin-top:24px;color:#9aa0a6;font-size:13px;">
+<p>📎 附件说明：</p>
+<ul>
+<li>第一轮文档：《基础递进式全景手册》—— 建立认知基座</li>
+<li>第二轮文档：《五大模块独立交付+深度验证手册》—— 实战拆解与方案对比</li>
+<li>建议用法：技术评审/面试时，先讲第一轮"为什么做"，再讲第二轮"怎么做+为什么这样选"</li>
+</ul>
+</div>
+</div>
+
+<script>
+mermaid.initialize({startOnLoad:true,theme:'default'});
+</script>
+</body>
+</html>
